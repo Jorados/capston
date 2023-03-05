@@ -48,8 +48,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {  //권�
             return;
         }
         //JWT토큰을 검증을 해서 정상적인 사용자인지 확인해야한다.
-        String token = request.getHeader(JwtProperties.HEADER_STRING)
-                .replace(JwtProperties.TOKEN_PREFIX, "");
+
+        //토큰파싱 (Bearer 없애기)
+        String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+
+        //토큰검증
         String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
                 .getClaim("username").asString();
 

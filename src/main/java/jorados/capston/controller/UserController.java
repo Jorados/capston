@@ -2,15 +2,11 @@ package jorados.capston.controller;
 
 
 import jorados.capston.domain.User;
-import jorados.capston.repository.UserRepository;
-import jorados.capston.request.JoinReqDto;
 import jorados.capston.response.ResponseDto;
 import jorados.capston.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +17,8 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+
+    //login,logout 기능은 일단 스프링시큐리티에서 제공
 
     @PostMapping("/home")
     public String home(){
@@ -42,5 +40,7 @@ public class UserController {
     public String adminPage(){
         return "<h1>관리자 페이지<h1>";
     }
+
+
 
 }
