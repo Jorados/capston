@@ -53,9 +53,10 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public void EncodingAndRole(String password,UserEnum role) {
+    public void edit(String username,String password, String email){
+        this.username = username;
         this.password = password;
-        this.role = role;
+        this.email = email;
     }
 
 }
