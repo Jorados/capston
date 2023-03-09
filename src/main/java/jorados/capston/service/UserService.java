@@ -35,6 +35,10 @@ public class UserService {
         log.info("회원 가입 완료");
     }
 
+    public List<User> AllUser(){
+        return userRepository.findAll();
+    }
+
     private void validateDuplicateMember(User user) {
         List<User> findAllUser = userRepository.findAllByUsername(user.getUsername());
 

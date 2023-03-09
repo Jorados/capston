@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 //@RequestMapping("/api")
@@ -31,6 +32,11 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", user.getUsername()), HttpStatus.CREATED);
     }
 
+    @GetMapping("/user/all")
+    public List<User> read(){
+        return userService.AllUser();
+    }
+
     @GetMapping("/api/user/1")
     public String customerPage(){
         return "<h1>일반회원 페이지<h1>";
@@ -40,6 +46,9 @@ public class UserController {
     public String adminPage(){
         return "<h1>관리자 페이지<h1>";
     }
+
+
+
 
 
 
