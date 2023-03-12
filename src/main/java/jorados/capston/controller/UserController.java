@@ -62,19 +62,19 @@ public class UserController {
         return userService.AllUser();
     }
 
-    //특정 회원 조회
+    //특정 회원 조회 --> 파라미터값으로 userId 필요
     @GetMapping("/user/{userId}")
     public UserResponse findUser(@PathVariable Long userId){
         return userService.read(userId);
     }
 
-    //회원 수정
+    //회원 수정 --> 파라미터값으로 userId 필요
     @PatchMapping("/user/{userId}")
     public void updateUser(@PathVariable Long userId, UserEdit userEdit){
         userService.update(userId,userEdit);
     }
 
-    //회원 삭제
+    //회원 삭제 --> 파라미터값으로 userId 필요
     @DeleteMapping("/user/{userId}")
     public void deleteUser(@PathVariable Long userId){
         userService.delete(userId);
