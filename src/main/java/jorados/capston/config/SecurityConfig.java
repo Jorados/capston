@@ -79,7 +79,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
-                .anyRequest().permitAll();
+                .anyRequest().permitAll().and().formLogin().loginProcessingUrl("/login");
+
         return http.build();
     }
 
