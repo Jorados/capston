@@ -3,16 +3,13 @@ package jorados.capston.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.config.auth.PrincipalDetailsService;
-import jorados.capston.config.jwt.JwtAuthorizationFilter;
 import jorados.capston.config.jwt.JwtProperties;
 import jorados.capston.domain.User;
 import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;
-import org.springframework.security.authentication.AuthenticationManager;
 import jorados.capston.request.UserEdit;
 import jorados.capston.response.ResponseDto;
 import jorados.capston.response.UserResponse;
@@ -21,9 +18,6 @@ import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +26,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 //@RequestMapping("/api")
@@ -57,7 +50,7 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", user.getUsername()), HttpStatus.CREATED);
     }
 
-    @PostMapping("/login2")
+    @PostMapping("/login2") //->비밀번호 이슈
     public void login(@RequestBody @Valid User user,HttpServletResponse response){
         System.out.println("/login 컨트롤러 진입 테스트");
         String username = user.getUsername();
@@ -118,5 +111,12 @@ public class UserController {
     public void deleteUser(@PathVariable Long userId){
         userService.delete(userId);
     }
+//
+//    //로그인 성공 -> 유저 정보 일부 반환
+//    @GetMapping("/user/success/{userId}")
+//    public UserResponse success(){
+//
+//    }
+
 
 }
