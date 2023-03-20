@@ -59,7 +59,7 @@ public class SecurityConfig {
 
         // ExcpetionTranslationFilter (인증 확인 필터) , authorization에서 authException (인증안됨) 터지는 예외처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            CustomResponseUtil.fail(response, "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED);
+            CustomResponseUtil.fail(response, "로그인 오류", HttpStatus.UNAUTHORIZED);
         });
 
         // 권한 실패 , authorization에서 허가 못받으면 터지는 예외처리
@@ -85,6 +85,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
+                .antMatchers("/user/success").authenticated()
                 .anyRequest().permitAll();
 
         return http.build();
