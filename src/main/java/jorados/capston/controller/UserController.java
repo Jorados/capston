@@ -8,6 +8,7 @@ import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.config.auth.PrincipalDetailsService;
 import jorados.capston.config.jwt.JwtProperties;
 import jorados.capston.domain.User;
+import jorados.capston.domain.UserEnum;
 import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.request.UserEdit;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,7 +86,7 @@ public class UserController {
     }
 
 
-    //문제점 : id,pw일치하지 않으면 401에러 발생시켜야함.
+    //문제점 : 만약 id,pw 일치하지 않으면 401에러 발생시켜야함.
     @PostMapping("/login3")
     public void login3(HttpServletRequest request,HttpServletResponse response) throws IOException {
         ObjectMapper om = new ObjectMapper();
@@ -149,11 +151,17 @@ public class UserController {
         userService.delete(userId);
     }
 
-//    //로그인 성공 -> 유저 정보 일부 반환
-//    @GetMapping("/user/success/{userId}")
-//    public UserResponse success(){
-//
-//    }
 
 
+    //로그인 성공 -> 유저 정보 일부 반환
+    @GetMapping("/user/success")
+    public UserResponse success(@AuthenticationPrincipal PrincipalDetails loginUser){
+        UserResponse userResponse = UserResponse.builder()
+                .id(loginUser.getUser().getId())
+                .username(loginUser.getUser().getUsername())
+                .email(loginUser.getUser().getEmail())
+                .role(UserEnum.CUSTOMER)
+                .build();
+        return userResponse;
+    }
 }
