@@ -2,7 +2,7 @@ package jorados.capston.service;
 
 
 import jorados.capston.domain.User;
-import jorados.capston.domain.UserEnum;
+import jorados.capston.domain.type.UserEnum;
 import jorados.capston.exception.DuplicateException;
 import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;

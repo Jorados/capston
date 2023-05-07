@@ -1,4 +1,4 @@
-package jorados.capston.domain;
+package jorados.capston.domain.type;
 
 
 import lombok.AllArgsConstructor;

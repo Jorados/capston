@@ -2,7 +2,7 @@ package jorados.capston.config;
 
 import jorados.capston.config.jwt.JwtAuthenticationFilter;
 import jorados.capston.config.jwt.JwtAuthorizationFilter;
-import jorados.capston.domain.UserEnum;
+import jorados.capston.domain.type.UserEnum;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
