@@ -1,7 +1,7 @@
 package jorados.capston.response;
 
 
-import jorados.capston.domain.UserEnum;
+import jorados.capston.domain.type.UserEnum;
 import lombok.Builder;
 import lombok.Getter;
 

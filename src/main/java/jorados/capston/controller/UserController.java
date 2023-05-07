@@ -8,7 +8,8 @@ import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.config.auth.PrincipalDetailsService;
 import jorados.capston.config.jwt.JwtProperties;
 import jorados.capston.domain.User;
-import jorados.capston.domain.UserEnum;
+
+import jorados.capston.domain.type.UserEnum;
 import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.request.UserEdit;

@@ -26,7 +26,7 @@ public class Center {
 
     @Column(name = "center_status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private CenterStatus status; // 예약상태
+    private CenterStatus status; // 시설 예약 가능상태
 
     @Column(name = "open_time", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -43,6 +43,10 @@ public class Center {
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Center_Img> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
+
+    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Center_Reservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)
 
 
     @Builder
