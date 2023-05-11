@@ -8,6 +8,7 @@ import jorados.capston.domain.User;
 import jorados.capston.response.UserRespDto;
 import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,7 @@ import java.util.Date;
 //UsernamePasswordAuthenticationFilter 동작을 함.
 //-> 근데 이게 .formLogin().disable() 때문에 작동을 안함
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {  //인증필터
 
     private final AuthenticationManager authenticationManager;
@@ -35,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     //login 요청을 하면 로그인 시도를 위해서 실행되는 함수
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JwtAuthenticationFilter: 로그인 시도중");
+        log.info("JwtAuthenticationFilter: 로그인 시도중");
 
         //1.username,password 를 받아서
         try {
@@ -57,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             //로그인이 되었다는 뜻.
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            System.out.println("로그인 완료됨 : " + principalDetails.getUser().getUsername()); //로그인이 정상적으로 됨.
+            log.info("로그인 완료됨 = {}", principalDetails.getUser().getUsername());
 
             //authentication객체가 session영역에 저장을해야하고 그 방법이 return 해주면됨.
             //리턴의 이유는 권한관리를 security가 대신 해주기 떄문에 편리하려고 하는거임.
@@ -78,7 +80,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        System.out.println("successfulAuthentication 실행됨 : 인증이 완료되었다는 뜻임." );
+        log.info("successfulAuthentication 실행됨 : 인증이 완료되었다는 뜻임.");
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
         //hash 암호 방식

@@ -8,6 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.domain.User;
 import jorados.capston.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import java.io.IOException;
 //시큐리티가 filter를 가지고 있는데 그 필터중에 BasicAuthenticationFilter라는 것이 있다.
 //권한이나 인증이 필요한 특정 주소를 요청을 했을 때 위 필터를 무조건 타게 돼있다.
 //만약에 권한이나 인증이 필요한 주소가 아니라면 이 필터를 안탄다.
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {  //권한 허가 필터
 
     //모든 주소에서 동작함
@@ -38,9 +40,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {  //권�
     //인증 권한이 필요한 주소요청이 있을 때 해당 필터를 타게 됨.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("인증이나 권한이  필요한 주소 요청이 됨.");
         String header = request.getHeader(JwtProperties.HEADER_STRING);
-        System.out.println("jwtHeader: " + header);
+        log.info("인증이나 권한이  필요한 주소 요청이 됨.");
+        log.info("jwtHeader = {}",header);
 
         //header가 있는지 확인
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
