@@ -61,55 +61,12 @@ public class UserController {
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", user.getUsername()), HttpStatus.CREATED);
     }
 
-    @PostMapping("/login2") //->비밀번호 이슈 //비밀번호 안치거나 안맞아도 username만 맞으면 login 진행됨.
-    public void login(@RequestBody @Valid User user,HttpServletResponse response){
-        System.out.println("/login 컨트롤러 진입");
-        String username = user.getUsername();
-        String password = user.getPassword();
-
-        //1.userId로 정보가져오기
-        UserDetails loginUser = principalDetailsService.loadUserByUsername(username);
-        //2.가져온 정보와 입력한 비밀번호로 검증 --> username,password 일치하면 토큰발급
-
-        User findUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFound());
-        PrincipalDetails principalDetails = new PrincipalDetails(findUser);
-
-        //4.토큰 생성후 발급
-        String jwtToken = JWT.create()
-                .withSubject(loginUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetails.getUser().getId())
-                .withClaim("username", principalDetails.getUser().getUsername())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
-
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
-        CustomResponseUtil.success(response, loginUser);
-    }
-
-
-    //문제점 : 만약 id,pw 일치하지 않으면 401에러 발생시켜야함.
-    @PostMapping("/login3")
-    public void login3(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        ObjectMapper om = new ObjectMapper();
-        User user = om.readValue(request.getInputStream(), User.class);
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        log.info("로그인 완료 = {}",principalDetails.getUser().getUsername());
-
-        //4.토큰 생성후 발급
-        String jwtToken = JWT.create()
-                .withSubject(principalDetails.getUser().getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetails.getUser().getId())
-                .withClaim("username", principalDetails.getUser().getUsername())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
-
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
-        CustomResponseUtil.success(response, principalDetails.getUser());
-    }
+    // 리프레시 토큰 - 예정
+//    @PostMapping("/refresh-token")
+//    public RefreshTokenResponse generateRefreshToken(@RequestBody final RefreshTokenRequest request) {
+//        RefreshTokenResponse refreshTokenResponse = tokenService.generateRefreshToken(request);
+//        return refreshTokenResponse;
+//    }
 
     //권한 테스트
     @GetMapping("/api/user/1")
