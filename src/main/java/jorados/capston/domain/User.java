@@ -19,7 +19,7 @@ public class User {
     @Column(name="user_id")
     private Long id; // DB 넘버
 
-    @Column(unique = true,nullable = false,length=20)
+    //@Column(unique = true,nullable = false,length=20)
     private String username; // 시큐리티 로그인 ID
 
     @Column(nullable = false ,length=60)
@@ -44,8 +44,12 @@ public class User {
     @JoinColumn(name = "center_id")
     private Center center; // 1인 1시설 예약 가능 ( 다대일 )
 
+    private String provider;
+    private String providerId;
+
+
     @Builder
-    public User(Long id, String username, String password, String email, UserEnum role, LocalDateTime updateAt, LocalDateTime createdAt) {
+    public User(Long id, String username, String password, String email, UserEnum role, LocalDateTime updateAt, LocalDateTime createdAt, String provider, String providerId) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -53,6 +57,8 @@ public class User {
         this.role = role;
         this.updateAt = updateAt;
         this.createdAt = createdAt;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 
     public void edit(String username,String password, String email){
