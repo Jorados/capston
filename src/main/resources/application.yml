@@ -15,6 +15,21 @@ spring:
         #???? ??? /* ??? ??? ????.
         use_sql_comments : true
 
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .mustache
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 889484100500-deajo3p9rv1d4hl09fl2rok9krl45cbk.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
 
 logging.level:
   org.hibernate.SQL: debug

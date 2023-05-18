@@ -2,12 +2,14 @@ package jorados.capston.config;
 
 import jorados.capston.config.jwt.JwtAuthenticationFilter;
 import jorados.capston.config.jwt.JwtAuthorizationFilter;
+import jorados.capston.config.oauth.PrincipalOauth2UserService;
 import jorados.capston.domain.type.UserEnum;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,8 @@ public class SecurityConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
 
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     // 모든 필터 등록은 여기서!! (AuthenticationManager 순환 의존 문제로 내부 클래스로 만들어진 듯, 추측임)
     public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
@@ -84,7 +88,12 @@ public class SecurityConfig {
                 .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
                 .antMatchers("/user/success").authenticated()
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login()
+                .loginPage("/loginForm")
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
 
         return http.build();
     }
