@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.domain.User;
-import jorados.capston.response.UserRespDto;
 import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,7 @@ import java.util.Date;
 
 
 //스프링 시큐리티에서 UsernamePasswordAuthenticationFilter 가 있음.
-//login요청해서 username,password 전송하면 (post)
+//login 요청해서 username,password 전송하면 (post)
 //UsernamePasswordAuthenticationFilter 동작을 함.
 //-> 근데 이게 .formLogin().disable() 때문에 작동을 안함
 @RequiredArgsConstructor
@@ -41,12 +40,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         //1.username,password 를 받아서
         try {
-//            BufferedReader br = request.getReader();
-//            String input = null;
-//            while((input=br.readLine())!=null){
-//                System.out.println(input);
-//            }
-
             //request 받은 거 String -> 오브젝트로 파싱
             ObjectMapper om = new ObjectMapper();
             User user = om.readValue(request.getInputStream(), User.class);

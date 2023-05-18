@@ -28,7 +28,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
 

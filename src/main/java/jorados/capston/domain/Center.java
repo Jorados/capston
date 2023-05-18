@@ -21,8 +21,11 @@ public class Center {
     @Column(name="center_id")
     private Long id; // DB 넘버
     private String center_name; // 시설 이름
-    private String address; // 주소
-    private String detail_address; // 상세주소
+//    private String address; // 주소
+//    private String detail_address; // 상세주소
+
+    private double lat;
+    private double lng;
 
     @Column(name = "center_status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -49,12 +52,18 @@ public class Center {
     private List<Center_Reservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)
 
 
+
+
+
+
+
+
     @Builder
-    public Center(Long id, String center_name, String address, String detail_address, CenterStatus status, ReservingTime openTime, ReservingTime closeTime) {
+    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime) {
         this.id = id;
         this.center_name = center_name;
-        this.address = address;
-        this.detail_address = detail_address;
+        this.lat = lat;
+        this.lng = lng;
         this.status = status;
         this.openTime = openTime;
         this.closeTime = closeTime;

@@ -1,38 +1,27 @@
 package jorados.capston.controller;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.config.auth.PrincipalDetailsService;
-import jorados.capston.config.jwt.JwtProperties;
 import jorados.capston.domain.User;
-
 import jorados.capston.domain.type.UserEnum;
-import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.request.UserEdit;
 import jorados.capston.response.ResponseDto;
 import jorados.capston.response.UserResponse;
 import jorados.capston.service.UserService;
-import jorados.capston.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -108,8 +97,6 @@ public class UserController {
     public void deleteUser(@PathVariable Long userId){
         userService.delete(userId);
     }
-
-
 
     //로그인 성공 -> 유저 정보 일부 반환
     @GetMapping("/user/success")
