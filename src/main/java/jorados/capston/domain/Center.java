@@ -17,6 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Center {
 
+    /**
+     *  속성
+     */
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="center_id")
     private Long id; // DB 넘버
@@ -27,21 +31,22 @@ public class Center {
     private double lat;
     private double lng;
 
-    @Column(name = "center_status", nullable = false)
+    //@Column(name = "center_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private CenterStatus status; // 시설 예약 가능상태
 
-    @Column(name = "open_time", nullable = false)
+    //@Column(name = "open_time", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservingTime openTime; //오픈시간
 
-    @Column(name = "close_time", nullable = false)
+    //@Column(name = "close_time", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservingTime closeTime; //닫는시간
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<User> user = new ArrayList<>(); // 한 시설에 여러 회원 예약 가능 (일대다)
+
+    /**
+     *  연관관계 매핑
+     */
 
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -51,15 +56,22 @@ public class Center {
     @JsonIgnore
     private List<Center_Reservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
+    /**
+     * 생성자
+     */
 
-
-
-
+    public void setUser(User user) {
+        this.user = user;
+        user.getCenter().add(this);
+    }
 
     @Builder
-    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime) {
+    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user) {
         this.id = id;
         this.center_name = center_name;
         this.lat = lat;
@@ -67,5 +79,6 @@ public class Center {
         this.status = status;
         this.openTime = openTime;
         this.closeTime = closeTime;
+        this.user = user;
     }
 }

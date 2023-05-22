@@ -2,9 +2,12 @@ package jorados.capston.service;
 
 
 import jorados.capston.domain.Center;
+import jorados.capston.domain.User;
 import jorados.capston.domain.type.CenterStatus;
 import jorados.capston.exception.CenterNotFound;
+import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.CenterRepository;
+import jorados.capston.repository.UserRepository;
 import jorados.capston.request.CenterEdit;
 import jorados.capston.response.CenterResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +22,13 @@ import java.util.List;
 public class CenterService {
 
     private final CenterRepository centerRepository;
+    private final UserRepository userRepository;
 
-    //센터등록
+    /**
+     *  기본 Crud
+     */
+
+    //센터 등록
     @Transactional
     public void save(Center center){
         Center save_Center =  Center.builder()
@@ -67,5 +75,47 @@ public class CenterService {
         Center findCenter = centerRepository.findById(id).orElseThrow(() -> new CenterNotFound());
         centerRepository.delete(findCenter);
     }
+
+
+    /**
+     *  회원 정보를 이용한 센터 Crud
+     */
+
+    //센터 예약하기 - Create
+    @Transactional
+    public void CenterReserveSave(User user,Center center){
+        User findUser = userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new UserNotFound());
+
+        Center saveCenter = Center.builder()
+                .center_name(center.getCenter_name())
+                .openTime(center.getOpenTime())
+                .closeTime(center.getOpenTime())
+                .lat(center.getLat())
+                .lng(center.getLng())
+                .user(findUser)
+                .build();
+
+        centerRepository.save(saveCenter);
+    }
+
+    // 예약한 센터 - Read
+    public List<Center> CenterReserveRead(User user){
+        User findUser = userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new UserNotFound());
+        List<Center> findCenter = centerRepository.findCenter(findUser.getId());
+        return findCenter;
+    }
+
+    // 예약 정보 수정 -> 회의 필요
+    public void CenterReserveUpdate(User user,CenterEdit centerEdit){
+
+    }
+
+    // 예약한 센터 삭제
+    public void CenterReserveDelete(Long centerId){
+        Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+        centerRepository.delete(findCenter);
+    }
+
+
 
 }

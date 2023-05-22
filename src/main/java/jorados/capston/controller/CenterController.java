@@ -2,19 +2,15 @@ package jorados.capston.controller;
 
 
 import jorados.capston.domain.Center;
-import jorados.capston.domain.User;
 import jorados.capston.request.CenterEdit;
-import jorados.capston.request.UserEdit;
 import jorados.capston.response.CenterResponse;
 import jorados.capston.response.ResponseDto;
-import jorados.capston.response.UserResponse;
 import jorados.capston.service.CenterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

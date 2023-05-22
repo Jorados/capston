@@ -1,6 +1,7 @@
 package jorados.capston.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jorados.capston.domain.type.UserEnum;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,9 +43,9 @@ public class User {
     //@Column(nullable = false)
     private LocalDateTime createdAt; //회원 생성일자
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private Center center; // 1인 1시설 예약 가능 ( 다대일 )
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Center> center = new ArrayList<>();
 
     private String provider;
     private String providerId;
