@@ -29,30 +29,21 @@ public class CenterReservationController {
     private final CenterService centerService;
     private final CenterRepository centerRepository;
 
-    // 센터 예약하기 -> create / @Post
-    @PostMapping("/reserve")
+    // 센터 예약 하기
+    @PostMapping("/{centerId}/reservation")
     public void CenterReserveCreate(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody @Valid Center center){
         User findUser = principalDetails.getUser();
         centerService.CenterReserveSave(findUser,center);
     }
 
-    // 센터 예약정보 조회 -> read / @Get
-    @GetMapping("/reserve")
-    public List<Center> CenterReserveRead(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        User findUser = principalDetails.getUser();
-        List<Center> findReserveCenter = centerService.CenterReserveRead(findUser);
-        return findReserveCenter;
-    }
-
-    // 센터 예약정보수정 -> update / @Patch
-    // 센터는 예약정보를 수정하면 -> 예약시간을 바꾸는 거 겠지? -> 회의 필요
-    @PutMapping("/{centerId}/update")
+    // 센터 예약 수정
+    @PatchMapping("/{centerId}/reservation/{reservationId}")
     public void CenterReserveUpdate(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
         // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 수정.
     }
 
-    // 특정 센터 예약취소 -> delete / @Delete
-    @DeleteMapping("/{centerId}/delete")
+    // 센터 예약 취소
+    @DeleteMapping("/{centerId}/reservation/{reservationId}")
     public void CenterReserveDelete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
         // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 삭제.
         User findUser = principalDetails.getUser();
@@ -63,5 +54,22 @@ public class CenterReservationController {
         }
         else log.info("삭제 에러 : 회원 정보 , 예약 정보 불일치");
     }
+
+
+    /****************************************************************************************************/
+
+    // 내 예약목록
+    @GetMapping("/reservations")
+    public List<Center> CenterReserveRead(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        User findUser = principalDetails.getUser();
+        List<Center> findReserveCenter = centerService.CenterReserveRead(findUser);
+        return findReserveCenter;
+    }
+
+    // 체육관 예약 페이지
+
+    // 체육관 예약 상세 내역 조회
+
+    // 체육관 가격 조회
 
 }

@@ -1,14 +1,22 @@
 package jorados.capston.controller;
 
 
+import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.domain.Center;
+import jorados.capston.domain.User;
+import jorados.capston.exception.UserNotFound;
 import jorados.capston.request.CenterEdit;
+import jorados.capston.response.CenterInfoResponseDto;
 import jorados.capston.response.CenterResponse;
+import jorados.capston.response.CenterResponseDto;
 import jorados.capston.response.ResponseDto;
 import jorados.capston.service.CenterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,35 +27,45 @@ import java.util.List;
 public class CenterController {
     private final CenterService centerService;
 
-    // 저장
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Center center){
-        centerService.save(center);
-        return new ResponseEntity<>(new ResponseDto<>(1, "저장 성공", center.getCenter_name()), HttpStatus.CREATED);
-    }
-
     // 다 조회
     @GetMapping("/all")
-    public List<Center> read(){
-        return centerService.findAll();
+    public ResponseEntity<Page<CenterResponseDto>> read(Pageable pageable){
+        Page<CenterResponseDto> centers = centerService.getAllStadiums(pageable);
+        return ResponseEntity.ok().body(centers);
     }
 
     // 특정 조회
-    @GetMapping("/{centerId}")
-    public CenterResponse findCenter(@PathVariable Long centerId){
-        return centerService.read_Center(centerId);
+    @GetMapping("/{centerId}/info")
+    public ResponseEntity<CenterInfoResponseDto> getCenterInfo(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PathVariable Long centerId
+    ) {
+        User user = null;
+
+        try {
+            user = principalDetails.getUser();
+        } catch (Exception e) {
+            throw new UserNotFound();
+        }
+        CenterInfoResponseDto center = centerService.getCenterInfo(centerId, user);
+        return ResponseEntity.ok().body(center);
     }
 
+    // 체육관 검색
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<StadiumResponseDto>> searchStadium(
+//            @RequestParam String searchValue,
+//            Pageable pageable) {
+//        Page<StadiumResponseDto> stadiumDocuments = stadiumSearchService.search(searchValue, pageable);
+//        return ResponseEntity.ok().body(stadiumDocuments);
+//    }
 
-    //수정 --> 파라미터값으로 centerId 필요
-    @PatchMapping("/{centerId}")
-    public void updateCenter(@PathVariable Long centerId, CenterEdit centerEdit){
-        centerService.center_update(centerId,centerEdit);
-    }
+//    // 저장
+//    @PostMapping("/save")
+//    public ResponseEntity<?> save(@RequestBody Center center){
+//        centerService.save(center);
+//        return new ResponseEntity<>(new ResponseDto<>(1, "저장 성공", center.getCenter_name()), HttpStatus.CREATED);
+//    }
 
-    //삭제 --> 파라미터값으로 userId 필요
-    @DeleteMapping("/{centerId}")
-    public void deleteCenter(@PathVariable Long centerId){
-        centerService.delete_center(centerId);
-    }
+
 }

@@ -9,8 +9,12 @@ import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.CenterRepository;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.request.CenterEdit;
+import jorados.capston.response.CenterInfoResponseDto;
 import jorados.capston.response.CenterResponse;
+import jorados.capston.response.CenterResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +64,22 @@ public class CenterService {
     public List<Center> findAll(){
         List<Center> findCenterAll = centerRepository.findAll();
         return findCenterAll;
+    }
+
+    // 센터 정보 싹 다 조회
+    @Transactional(readOnly = true)
+    public Page<CenterResponseDto> getAllStadiums(Pageable pageable) {
+        return centerRepository.findAll(pageable).map(CenterResponseDto::fromEntity);
+    }
+
+    // 센터 정보 특정 조회
+    @Transactional(readOnly = true)
+    public CenterInfoResponseDto getCenterInfo(Long centerId,User user) {
+        Center center = centerRepository.findById(centerId).orElseThrow(
+                () -> new CenterNotFound()
+        );
+
+        return CenterInfoResponseDto.fromEntity(center);
     }
 
 

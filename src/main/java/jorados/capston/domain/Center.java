@@ -43,6 +43,9 @@ public class Center {
     @Enumerated(EnumType.STRING)
     private ReservingTime closeTime; //닫는시간
 
+    private Integer price;
+    private String address;
+
 
     /**
      *  연관관계 매핑
