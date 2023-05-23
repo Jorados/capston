@@ -1,7 +1,7 @@
 package jorados.capston.controller;
 
 import jorados.capston.exception.SeongjinException;
-import jorados.capston.response.ErrorResponse;
+import jorados.capston.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

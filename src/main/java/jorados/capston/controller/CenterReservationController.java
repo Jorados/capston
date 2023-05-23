@@ -4,20 +4,21 @@ package jorados.capston.controller;
 import jorados.capston.config.auth.PrincipalDetails;
 import jorados.capston.domain.Center;
 import jorados.capston.domain.User;
+import jorados.capston.dto.CenterReservationDto;
 import jorados.capston.exception.CenterNotFound;
 import jorados.capston.repository.CenterRepository;
-import jorados.capston.request.CenterEdit;
-import jorados.capston.response.CenterResponse;
 import jorados.capston.service.CenterService;
 import jorados.capston.service.UserService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
+
+import static jorados.capston.dto.CenterReservationDto.*;
 
 @RestController
 @Slf4j
@@ -29,11 +30,16 @@ public class CenterReservationController {
     private final CenterService centerService;
     private final CenterRepository centerRepository;
 
-    // 센터 예약 하기
+    // 예약하기
     @PostMapping("/{centerId}/reservation")
-    public void CenterReserveCreate(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody @Valid Center center){
-        User findUser = principalDetails.getUser();
-        centerService.CenterReserveSave(findUser,center);
+    public ResponseEntity<?> createReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @RequestBody CreateReservationRequest request) {
+
+        User user = principalDetails.getUser();
+        CenterReservationDto.CreateReservationResponse reservationInfo = centerReservationService.createReservation(user, centerId, request);
+
+        notificationService.createNotification(RESERVATION, stadiumId, "체육관 [ " + reservationInfo.getStadiumName() + " ]에 새로운 예약이 등록되었습니다.", user);
+        log.info("회원 번호 [ " + user.getId() + " ] 로 알람이 발송되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationInfo);
     }
 
     // 센터 예약 수정

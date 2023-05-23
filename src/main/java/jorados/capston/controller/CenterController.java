@@ -2,24 +2,17 @@ package jorados.capston.controller;
 
 
 import jorados.capston.config.auth.PrincipalDetails;
-import jorados.capston.domain.Center;
 import jorados.capston.domain.User;
 import jorados.capston.exception.UserNotFound;
-import jorados.capston.request.CenterEdit;
-import jorados.capston.response.CenterInfoResponseDto;
-import jorados.capston.response.CenterResponse;
-import jorados.capston.response.CenterResponseDto;
-import jorados.capston.response.ResponseDto;
+import jorados.capston.dto.response.CenterInfoResponseDto;
+import jorados.capston.dto.response.CenterResponseDto;
 import jorados.capston.service.CenterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,7 +34,6 @@ public class CenterController {
             @PathVariable Long centerId
     ) {
         User user = null;
-
         try {
             user = principalDetails.getUser();
         } catch (Exception e) {
@@ -66,6 +58,7 @@ public class CenterController {
 //        centerService.save(center);
 //        return new ResponseEntity<>(new ResponseDto<>(1, "저장 성공", center.getCenter_name()), HttpStatus.CREATED);
 //    }
+    //
 
 
 }

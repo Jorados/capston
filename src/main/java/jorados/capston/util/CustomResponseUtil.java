@@ -1,7 +1,7 @@
 package jorados.capston.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jorados.capston.response.ResponseDto;
+import jorados.capston.dto.response.ResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

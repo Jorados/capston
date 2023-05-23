@@ -1,4 +1,4 @@
-package jorados.capston.request;
+package jorados.capston.dto.request;
 
 
 import lombok.Getter;

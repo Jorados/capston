@@ -1,4 +1,4 @@
-package jorados.capston.response;
+package jorados.capston.dto.response;
 
 import jorados.capston.domain.Center;
 import jorados.capston.domain.CenterDocument;
@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor

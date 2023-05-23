@@ -1,8 +1,7 @@
-package jorados.capston.response;
+package jorados.capston.dto.response;
 
 
 import jorados.capston.domain.Center;
-import jorados.capston.domain.Center_Img;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

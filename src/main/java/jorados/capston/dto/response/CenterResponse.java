@@ -1,4 +1,4 @@
-package jorados.capston.response;
+package jorados.capston.dto.response;
 
 
 import jorados.capston.domain.type.CenterStatus;

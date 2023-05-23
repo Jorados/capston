@@ -53,11 +53,11 @@ public class Center {
 
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Center_Img> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
+    private List<CenterImg> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
 
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Center_Reservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)
+    private List<CenterReservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

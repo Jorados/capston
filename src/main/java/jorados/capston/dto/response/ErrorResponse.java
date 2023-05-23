@@ -1,5 +1,5 @@
 
-package jorados.capston.response;
+package jorados.capston.dto.response;
 
 
 import lombok.Builder;

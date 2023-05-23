@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Center_Img {
+public class CenterImg {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="center_img_id")

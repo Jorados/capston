@@ -5,6 +5,8 @@ import jorados.capston.domain.type.CenterStatus;
 import jorados.capston.domain.type.ReservingTime;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Center_Reservation {
+public class CenterReservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "center_reservation_id")
@@ -44,5 +46,14 @@ public class Center_Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private List<ReservingTime> reservingTimes = new ArrayList<>();
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    // 인원수
+    private int headCount;
 
 }
