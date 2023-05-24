@@ -7,10 +7,12 @@ import jorados.capston.domain.User;
 import jorados.capston.dto.CenterReservationDto;
 import jorados.capston.exception.CenterNotFound;
 import jorados.capston.repository.CenterRepository;
+import jorados.capston.service.CenterReservationService;
 import jorados.capston.service.CenterService;
 import jorados.capston.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,26 +31,29 @@ public class CenterReservationController {
     private final UserService userService;
     private final CenterService centerService;
     private final CenterRepository centerRepository;
+    private final CenterReservationService centerReservationService;
 
     // 예약하기
     @PostMapping("/{centerId}/reservation")
-    public ResponseEntity<?> createReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @RequestBody CreateReservationRequest request) {
+    public ResponseEntity<?> createReservation(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                               @PathVariable Long centerId,
+                                               @RequestBody CreateReservationRequest request) {
 
         User user = principalDetails.getUser();
-        CenterReservationDto.CreateReservationResponse reservationInfo = centerReservationService.createReservation(user, centerId, request);
+        CreateReservationResponse reservationInfo = centerReservationService.createReservation(user, centerId, request);
 
-        notificationService.createNotification(RESERVATION, stadiumId, "체육관 [ " + reservationInfo.getStadiumName() + " ]에 새로운 예약이 등록되었습니다.", user);
-        log.info("회원 번호 [ " + user.getId() + " ] 로 알람이 발송되었습니다.");
+        log.info("회원 번호 [ " + user.getId() + " ] 로 예약 되었습니다..");
+
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationInfo);
     }
 
-    // 센터 예약 수정
+    // 센터 예약 수정 : 미완
     @PatchMapping("/{centerId}/reservation/{reservationId}")
     public void CenterReserveUpdate(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
         // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 수정.
     }
 
-    // 센터 예약 취소
+    // 센터 예약 취소 : 미완
     @DeleteMapping("/{centerId}/reservation/{reservationId}")
     public void CenterReserveDelete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
         // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 삭제.

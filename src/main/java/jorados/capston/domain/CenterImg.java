@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CenterImg {
+public class CenterImg implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="center_img_id")

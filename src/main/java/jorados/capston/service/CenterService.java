@@ -34,7 +34,7 @@ public class CenterService {
 
     //센터 등록
     @Transactional
-    public void save(Center center){
+    public void save(Center center,User user){
         Center save_Center =  Center.builder()
                 .center_name(center.getCenter_name())
                 .status(CenterStatus.POSSIBLE)
@@ -42,7 +42,12 @@ public class CenterService {
                 .closeTime(center.getCloseTime())
                 .lat(center.getLat())
                 .lng(center.getLng())
+                .user(user)
+                .address(center.getAddress())
+                .price(center.getPrice())
                 .build();
+
+        centerRepository.save(save_Center);
     }
 
     //특정 센터 정보가져오기
@@ -75,10 +80,7 @@ public class CenterService {
     // 센터 정보 특정 조회
     @Transactional(readOnly = true)
     public CenterInfoResponseDto getCenterInfo(Long centerId,User user) {
-        Center center = centerRepository.findById(centerId).orElseThrow(
-                () -> new CenterNotFound()
-        );
-
+        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
         return CenterInfoResponseDto.fromEntity(center);
     }
 

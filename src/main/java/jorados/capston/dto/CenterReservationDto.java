@@ -7,6 +7,7 @@ import jorados.capston.domain.type.ReservingTime;
 import jorados.capston.dto.response.CenterInfoResponseDto;
 import jorados.capston.dto.response.UserResponse;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +19,13 @@ public class CenterReservationDto {
     @AllArgsConstructor
     @Builder
     public static class CreateReservationRequest {
-        private LocalDate reservingDate;
+
+//        @DateTimeFormat(pattern = "yyyy-MM-dd")
+//        private LocalDate reservingDate;
         List<String> reservingTimes;
         private int headCount;
         //private List<ItemRequest> items;
-        private String paymentType;
+        //private String paymentType;
     }
 
     // 예약내역 체육관 정보
@@ -44,7 +47,7 @@ public class CenterReservationDto {
         private Long reservationId;
         private Long centerId;
         private String centerName;
-        private String date;
+        private LocalDate date;
         private String openTime;
         private String closeTime;
         private int pricePerHalfHour;
@@ -75,7 +78,7 @@ public class CenterReservationDto {
                     .centerId(reservation.getCenter().getId())
                     .name(reservation.getCenter().getCenter_name())
                     .user(CenterReservationDto.UserResponse.fromEntity(reservation.getUser()))
-                    .reservingDate(reservation.getReservingDate().toString())
+                    //.reservingDate(reservation.getReservingDate().toString())
                     .reservingTime(reservation.getReservingTimes().stream()
                             .map(ReservingTime::getTime)
                             .collect(Collectors.toList()))

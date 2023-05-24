@@ -35,11 +35,11 @@ public class Center {
     @Enumerated(EnumType.STRING)
     private CenterStatus status; // 시설 예약 가능상태
 
-    //@Column(name = "open_time", nullable = false)
+    @Column(name = "open_time", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservingTime openTime; //오픈시간
 
-    //@Column(name = "close_time", nullable = false)
+    @Column(name = "close_time", nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservingTime closeTime; //닫는시간
 
@@ -74,7 +74,7 @@ public class Center {
     }
 
     @Builder
-    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user) {
+    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user,String address,Integer price) {
         this.id = id;
         this.center_name = center_name;
         this.lat = lat;
@@ -83,5 +83,7 @@ public class Center {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.user = user;
+        this.address = address;
+        this.price = price;
     }
 }

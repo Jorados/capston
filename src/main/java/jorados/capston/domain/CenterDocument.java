@@ -15,21 +15,14 @@ import java.util.List;
 public class CenterDocument {
     @Id
     private Long id;
-
     private String name;
-
     private Double lat;
-
     private Double lnt;
-
     private String address;
-
-
     private Integer price;
-
     private String imgUrl;
-
     private List<String> tags;
+
 
     public static CenterDocument fromEntity(Center center) {
         return CenterDocument.builder()
@@ -39,9 +32,7 @@ public class CenterDocument {
                 .lat(center.getLat())
                 .lnt(center.getLng())
                 .price(center.getPrice())
-                .imgUrl(center.getImgs().isEmpty() ?
-                        null :
-                        center.getImgs().get(0).getImg_Url())
+                .imgUrl(center.getImgs().isEmpty() ? null : center.getImgs().get(0).getImg_Url())
                 .build();
     }
 }
