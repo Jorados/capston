@@ -65,5 +65,4 @@ public class CenterController {
         return new ResponseEntity<>(new ResponseDto<>(1, "저장 성공", center.getCenter_name()), HttpStatus.CREATED);
     }
 
-
 }

@@ -65,6 +65,10 @@ public class CenterReservation {
     // 인원수
     private int headCount;
 
+    public void cancelReservation() {
+        this.status = CenterReservationStatus.CANCELED;
+    }
+
     public static CenterReservation fromRequest(Center center, User user, CreateReservationRequest request, int price) {
         return CenterReservation.builder()
                 .center(center)

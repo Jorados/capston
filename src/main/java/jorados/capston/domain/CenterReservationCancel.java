@@ -13,7 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class CenterReservationCancel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +24,6 @@ public class CenterReservationCancel {
 
     //@Column(nullable = false)
     private int price;
+
+
 }

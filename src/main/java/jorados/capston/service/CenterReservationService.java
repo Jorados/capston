@@ -3,12 +3,13 @@ package jorados.capston.service;
 
 import jorados.capston.domain.Center;
 import jorados.capston.domain.CenterReservation;
+import jorados.capston.domain.CenterReservationCancel;
 import jorados.capston.domain.User;
+import jorados.capston.domain.type.CenterReservationStatus;
 import jorados.capston.domain.type.ReservingTime;
-import jorados.capston.exception.AlreadyReservedTime;
-import jorados.capston.exception.CenterNotFound;
-import jorados.capston.exception.TimeFormatNotAccepted;
+import jorados.capston.exception.*;
 import jorados.capston.repository.CenterRepository;
+import jorados.capston.repository.CenterReservationCancelRepository;
 import jorados.capston.repository.CenterReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ import static jorados.capston.dto.CenterReservationDto.*;
 public class CenterReservationService {
     private final CenterReservationRepository centerReservationRepository;
     private final CenterRepository centerRepository;
+    private final CenterReservationCancelRepository centerReservationCancelRepository;
 
     // 예약하기
     @Transactional
@@ -60,6 +62,34 @@ public class CenterReservationService {
                 .pricePerHalfHour(reservation.getPrice())
                 .date(LocalDate.now())
                 .build();
+    }
+
+    // 예약삭제
+    public void deleteReservation(User user, Long centerId, Long reservationId) {
+        CenterReservation reservation = centerReservationRepository.findById(reservationId).orElseThrow(() -> new ReservationNotFound());
+
+        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+
+        if (!reservation.getCenter().getId().equals(centerId)) {
+            throw new CenterReservationNotMatch();
+        }
+
+        if (!reservation.getUser().getId().equals(user.getId())) {
+            throw new UnAuthorizedAccess();
+        }
+
+        if (reservation.getStatus() != CenterReservationStatus.RESERVED) {
+            throw new CouldNotCancelReservation();
+        }
+
+        reservation.cancelReservation();
+        CenterReservationCancel reservationCancel = CenterReservationCancel.builder()
+                .reservation(reservation)
+                .price(reservation.getPrice())
+                .build();
+
+        centerReservationRepository.save(reservation);
+        centerReservationCancelRepository.save(reservationCancel);
     }
 
 

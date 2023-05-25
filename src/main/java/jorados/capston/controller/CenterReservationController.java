@@ -33,7 +33,7 @@ public class CenterReservationController {
     private final CenterRepository centerRepository;
     private final CenterReservationService centerReservationService;
 
-    // 예약하기
+    // 센터 예약하기
     @PostMapping("/{centerId}/reservation")
     public ResponseEntity<?> createReservation(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                @PathVariable Long centerId,
@@ -43,7 +43,6 @@ public class CenterReservationController {
         CreateReservationResponse reservationInfo = centerReservationService.createReservation(user, centerId, request);
 
         log.info("회원 번호 [ " + user.getId() + " ] 로 예약 되었습니다..");
-
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationInfo);
     }
 
@@ -53,23 +52,20 @@ public class CenterReservationController {
         // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 수정.
     }
 
-    // 센터 예약 취소 : 미완
+    // 센터 예약 취소
     @DeleteMapping("/{centerId}/reservation/{reservationId}")
-    public void CenterReserveDelete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
-        // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 삭제.
+    public ResponseEntity<?> deleteReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
         User findUser = principalDetails.getUser();
-        Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+        centerReservationService.deleteReservation(findUser, centerId, reservationId);
 
-        if(findCenter.getUser().getId() == findUser.getId()){
-            centerService.CenterReserveDelete(findCenter.getId());
-        }
-        else log.info("삭제 에러 : 회원 정보 , 예약 정보 불일치");
+        log.info("회원 번호 [ " + findUser.getId() + " ] 로 예약이 취소되었습니다..");
+        return ResponseEntity.ok().build();
     }
 
 
-    /****************************************************************************************************/
+    /*****************************************  조회  ***********************************************************/
 
-    // 내 예약목록
+    // 내 예약목록 : 미완
     @GetMapping("/reservations")
     public List<Center> CenterReserveRead(@AuthenticationPrincipal PrincipalDetails principalDetails){
         User findUser = principalDetails.getUser();
@@ -77,10 +73,10 @@ public class CenterReservationController {
         return findReserveCenter;
     }
 
-    // 체육관 예약 페이지
+    // 체육관 예약 페이지 : 미완
 
-    // 체육관 예약 상세 내역 조회
+    // 체육관 예약 상세 내역 조회 : 미완
 
-    // 체육관 가격 조회
+    // 체육관 가격 조회 : 미완
 
 }

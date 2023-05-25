@@ -2,6 +2,7 @@ package jorados.capston.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jorados.capston.domain.type.CenterReservationStatus;
 import jorados.capston.domain.type.CenterStatus;
 import jorados.capston.domain.type.ReservingTime;
 import lombok.Builder;
@@ -9,13 +10,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Center {
+public class Center implements Serializable {
 
     /**
      *  속성
@@ -46,14 +48,20 @@ public class Center {
     private Integer price;
     private String address;
 
+//    @Column(name = "img_id")
+//    private String imgId;
+
+    @Column(name = "img_url", length = 1000)
+    private String imgUrl;
+
 
     /**
      *  연관관계 매핑
      */
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<CenterImg> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
+//    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<CenterImg> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
 
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -73,8 +81,10 @@ public class Center {
         user.getCenter().add(this);
     }
 
+
+
     @Builder
-    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user,String address,Integer price) {
+    public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user,String address,Integer price,String imgUrl) {
         this.id = id;
         this.center_name = center_name;
         this.lat = lat;
@@ -85,5 +95,6 @@ public class Center {
         this.user = user;
         this.address = address;
         this.price = price;
+        this.imgUrl = imgUrl;
     }
 }

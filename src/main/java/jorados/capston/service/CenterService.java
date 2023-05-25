@@ -45,6 +45,7 @@ public class CenterService {
                 .user(user)
                 .address(center.getAddress())
                 .price(center.getPrice())
+                .imgUrl(center.getImgUrl())
                 .build();
 
         centerRepository.save(save_Center);
