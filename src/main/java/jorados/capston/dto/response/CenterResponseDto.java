@@ -30,9 +30,7 @@ public class CenterResponseDto {
                 .lnt(center.getLng())
                 .address(center.getAddress())
                 .price(center.getPrice())
-                .imgUrl(center.getImgs().isEmpty() ?
-                        null :
-                        center.getImgs().get(0).getImg_Url())
+                .imgUrl(center.getImgUrl())
                 .build();
     }
 

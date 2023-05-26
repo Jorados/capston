@@ -33,7 +33,7 @@ public class CenterInfoResponseDto {
 
     //private List<StadiumItemDto.Response> rentalItems;
 
-    private List<CenterImgDto> imgs;
+    private String imgUrl;
 
     private String openTime;
 
@@ -52,15 +52,7 @@ public class CenterInfoResponseDto {
                 .price(center.getPrice())
                 .openTime(center.getOpenTime().getTime())
                 .closeTime(center.getCloseTime().getTime())
-                .imgs(center.getImgs().isEmpty() ?
-                        null :
-                        center.getImgs().stream().map(img ->
-                                        CenterImgDto.builder()
-                                                .id(img.getId())
-                                                .publicId(img.getImg_Id())
-                                                .imgUrl(img.getImg_Url())
-                                                .build())
-                                .collect(Collectors.toList()))
+                .imgUrl(center.getImgUrl())
                 .build();
     }
 }

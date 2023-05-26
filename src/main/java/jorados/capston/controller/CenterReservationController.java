@@ -12,6 +12,8 @@ import jorados.capston.service.CenterService;
 import jorados.capston.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,17 +67,24 @@ public class CenterReservationController {
 
     /*****************************************  조회  ***********************************************************/
 
-    // 내 예약목록 : 미완
+    // 내 예약목록 -> /center/reservations?page=1&size=2 이런식으로 page 객체 파라미터 보내야함
     @GetMapping("/reservations")
-    public List<Center> CenterReserveRead(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<?> getAllReservations(@AuthenticationPrincipal PrincipalDetails principalDetails, Pageable pageable) {
         User findUser = principalDetails.getUser();
-        List<Center> findReserveCenter = centerService.CenterReserveRead(findUser);
-        return findReserveCenter;
+        Page<ReservationResponse> reservations = centerReservationService.getAllReservationsByUser(findUser, pageable);
+        return ResponseEntity.ok().body(reservations);
     }
 
     // 체육관 예약 페이지 : 미완
 
-    // 체육관 예약 상세 내역 조회 : 미완
+    // 체육관 예약 상세 내역 조회
+    @GetMapping("/{centerId}/reservation/{reservationId}")
+    public ResponseEntity<?> getReservationInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
+        User findUser = principalDetails.getUser();
+        ReservationInfoResponse reservationInfo = centerReservationService.getReservationInfo(findUser, centerId, reservationId);
+
+        return ResponseEntity.ok().body(reservationInfo);
+    }
 
     // 체육관 가격 조회 : 미완
 

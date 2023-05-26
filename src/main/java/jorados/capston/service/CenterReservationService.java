@@ -13,6 +13,8 @@ import jorados.capston.repository.CenterReservationCancelRepository;
 import jorados.capston.repository.CenterReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -91,6 +93,49 @@ public class CenterReservationService {
         centerReservationRepository.save(reservation);
         centerReservationCancelRepository.save(reservationCancel);
     }
+
+    // 내 예약목록
+    @Transactional(readOnly = true)
+    public Page<ReservationResponse> getAllReservationsByUser(User user, Pageable pageable) {
+        return centerReservationRepository
+                .findAllByUserOrderByReservingDateDesc(user, pageable)
+                .map(ReservationResponse::fromEntity);
+    }
+
+
+    // 특정 체육관의 특정 [ 예약 내역 ] 조회
+    @Transactional(readOnly = true)
+    public ReservationInfoResponse getReservationInfo(User user, Long centerId, Long reservationId) {
+
+        CenterReservation reservation = centerReservationRepository.findById(reservationId).orElseThrow(() -> new ReservationNotFound());
+
+        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+
+        // 예약한 센터랑 가져온센터랑 일치하지 않을경우
+        if (!reservation.getCenter().getId().equals(centerId)) {
+            throw new CenterReservationNotMatch();
+        }
+
+        // 예약한사람이랑 현재 접속자랑 일치하지 않을경우
+        if (!reservation.getCenter().getUser().getId().equals(user.getId())) {
+            throw new UnAuthorizedAccess();
+        }
+
+        return ReservationInfoResponse.fromEntity(reservation);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

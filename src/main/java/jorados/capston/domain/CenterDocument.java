@@ -32,7 +32,7 @@ public class CenterDocument {
                 .lat(center.getLat())
                 .lnt(center.getLng())
                 .price(center.getPrice())
-                .imgUrl(center.getImgs().isEmpty() ? null : center.getImgs().get(0).getImg_Url())
+                .imgUrl(center.getImgUrl())
                 .build();
     }
 }

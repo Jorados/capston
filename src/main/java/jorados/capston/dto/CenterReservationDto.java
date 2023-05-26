@@ -68,6 +68,8 @@ public class CenterReservationDto {
         private List<String> reservingTime;
         private int headCount;
         private int price;
+        private String imgUrl;
+
         //private String paymentType;
 
         public static ReservationInfoResponse fromEntity(CenterReservation reservation) {
@@ -84,6 +86,7 @@ public class CenterReservationDto {
                             .collect(Collectors.toList()))
                     .headCount(reservation.getHeadCount())
                     .price(reservation.getPrice())
+                    .imgUrl(reservation.getCenter().getImgUrl())
 //                    .paymentType(reservation.getPaymentType().toString())
 //                    .items(ItemResponse.fromReservation(reservation))
                     .status(reservation.getStatus().toString())
@@ -111,7 +114,7 @@ public class CenterReservationDto {
                     .centerId(center.getId())
                     .name(center.getCenter_name())
                     .address(center.getAddress())
-                    .imgUrl(center.getImgs().get(0).getImg_Url())
+                    .imgUrl(center.getImgUrl())
                     .status(reservation.getStatus().toString())
                     .build();
         }
