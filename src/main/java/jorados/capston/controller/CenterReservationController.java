@@ -77,7 +77,7 @@ public class CenterReservationController {
 
     // 체육관 예약 페이지 : 미완
 
-    // 체육관 예약 상세 내역 조회
+    // 체육관 특정 예약 내역 조회
     @GetMapping("/{centerId}/reservation/{reservationId}")
     public ResponseEntity<?> getReservationInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
         User findUser = principalDetails.getUser();

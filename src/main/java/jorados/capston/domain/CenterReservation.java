@@ -32,9 +32,6 @@ public class CenterReservation {
     private Long id; // DB 넘버
     private int price; // 가격
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-//    private LocalDateTime reserve_time; // 예약을 한 현재시간
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CenterReservationStatus status;

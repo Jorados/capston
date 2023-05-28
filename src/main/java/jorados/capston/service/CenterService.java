@@ -74,7 +74,7 @@ public class CenterService {
 
     // 센터 정보 싹 다 조회
     @Transactional(readOnly = true)
-    public Page<CenterResponseDto> getAllStadiums(Pageable pageable) {
+    public Page<CenterResponseDto> getAllCenter(Pageable pageable) {
         return centerRepository.findAll(pageable).map(CenterResponseDto::fromEntity);
     }
 

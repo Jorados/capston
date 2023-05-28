@@ -28,7 +28,7 @@ public class CenterController {
     // 다 조회
     @GetMapping("/all")
     public ResponseEntity<Page<CenterResponseDto>> read(Pageable pageable){
-        Page<CenterResponseDto> centers = centerService.getAllStadiums(pageable);
+        Page<CenterResponseDto> centers = centerService.getAllCenter(pageable);
         return ResponseEntity.ok().body(centers);
     }
 

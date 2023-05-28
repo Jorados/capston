@@ -1,5 +1,6 @@
-package jorados.capston.domain;
+package jorados.capston.domain.type;
 
+import jorados.capston.domain.Center;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
