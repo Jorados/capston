@@ -10,7 +10,7 @@
 ![image](https://github.com/Jorados/capston/assets/100845256/2586f216-1ec9-438b-aeca-7d1585d9a8b5)      
 
 
-## 2. 예약 API - 센터 예약 / 센터 예약정보 수정 / 센터 예약정보 취소      
+## 2. 예약 API - 센터 예약 /  센터 예약정보 취소      
 
 ### 1.센터 예약   
  - "localhost:8080/center/{centerId}/reservation"   
@@ -21,15 +21,8 @@
 
 ![image](https://github.com/Jorados/capston/assets/100845256/ca4a123d-4174-44a2-ada3-1d03c77329c0)   
 
-### 2. 센터 예약정보 수정 - 미개발      
- - "localhost:8080/center/{centerId}/reservation/{reservationId}"   
- - Http 메서드 : PATCH   
- - request URI (PathVariable 방식) : centerId , reservationId   
- - request.header : 인증토큰   
- - request.body : 아직 x    
-
-### 3. 센터 예약정보 취소   
- - "localhost:8080/center/{centerId}/reservation/{reservationId}" --> 여기서 reservationId는 나의 특정예약정보 API GET을 통해서 보내면됨    
+### 2. 센터 예약정보 취소   
+ - "localhost:8080/center/{centerId}/reservation/{reservationId}"  
  - Http 메서드 : DELETE   
  - request URI (PathVariable 방식) : centerId , reservationId   
  - request.header : 인증토큰   
@@ -38,7 +31,7 @@
 ![image](https://github.com/Jorados/capston/assets/100845256/f00c4dbf-3789-434e-996a-8e953cab738e)   
 
  
-## 3. 예약 API - 나의 예약목록 / 나의 특정 예약 상세 / 나의 특정 예약 정보    
+## 3. 예약 API - 나의 예약목록 / 나의 특정 예약 상세 / 나의 특정 예약 정보 / 체육관 예약 페이지 정보 요청
 
 ### 1. 나의 예약 목록      
  - "localhost:8080/center/reservations"   
@@ -55,14 +48,22 @@
  - request.header : 인증토큰   
  - request.body : x     
 
-### 2. 어떠한 체육관 특정 예약 정보 조회 - 미개발     
- - "localhost:8080/center/{centerId}/reservation/{reservationId}"  --> 여기서 reservationId는 나의 특정예약정보 API GET을 통해서 보내면됨    
+### 3. 어떠한 체육관 특정 예약 정보 조회     
+ - "localhost:8080/center/{centerId}/reservation/{reservationId}"
  - Http 메서드 : GET      
  - request URI (PathVariable 방식) : centerId , reservationId      
  - request.header : 인증토큰     
  - request.body : x       
 
-![image](https://github.com/Jorados/capston/assets/100845256/25b729ac-5bf9-46bc-8c30-f409b2679de4)       
+![image](https://github.com/Jorados/capston/assets/100845256/1f2c00f2-c8cd-4b90-88ce-38a6c001f86f)         
+
+### 4. 체육관 예약 페이지 정보 요청 
+ - "localhost:8080/center/{centerId}/reservation"
+ - Http 메서드 : GET      
+ - request URI (PathVariable 방식) : centerId  
+ - request.header : 인증토큰     
+ - request.body : x 
+![image](https://github.com/Jorados/capston/assets/100845256/e8458214-79b6-450b-bfc5-664bbd9e57e7)   
 
 
 
