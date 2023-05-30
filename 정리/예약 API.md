@@ -28,7 +28,7 @@
  - request.header : 인증토큰   
  - request.body : x     
 
-![image](https://github.com/Jorados/capston/assets/100845256/f00c4dbf-3789-434e-996a-8e953cab738e)   
+![image](https://github.com/Jorados/capston/assets/100845256/e33c4068-4de2-4462-8f14-caa34aec6571)   
 
  
 ## 3. 예약 API - 나의 예약목록 / 나의 특정 예약 상세 / 나의 특정 예약 정보 / 체육관 예약 페이지 정보 요청
