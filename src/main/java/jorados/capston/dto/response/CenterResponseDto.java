@@ -2,6 +2,7 @@ package jorados.capston.dto.response;
 
 import jorados.capston.domain.Center;
 import jorados.capston.domain.type.CenterDocument;
+import jorados.capston.domain.type.ReservingTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,9 @@ public class CenterResponseDto {
     private String address;
     private Integer price;
 
+    private String openTime;
+    private String closeTime;
+
     private String imgUrl; // TODO: 이미지주소 + public_id도 포함 필요
 
     public static CenterResponseDto fromEntity(Center center) {
@@ -28,6 +32,8 @@ public class CenterResponseDto {
                 .name(center.getCenter_name())
                 .lat(center.getLat())
                 .lnt(center.getLng())
+                .openTime(center.getOpenTime().getTime())
+                .closeTime(center.getCloseTime().getTime())
                 .address(center.getAddress())
                 .price(center.getPrice())
                 .imgUrl(center.getImgUrl())

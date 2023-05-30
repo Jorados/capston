@@ -43,7 +43,7 @@ public class CenterInfoResponseDto {
     public static CenterInfoResponseDto fromEntity(Center center) {
         return CenterInfoResponseDto.builder()
                 .id(center.getId())
-                .memberId(center.getUser().getId())
+                //.memberId(center.getUser().getId())
                 .name(center.getCenter_name())
                 .lat(center.getLat())
                 .lnt(center.getLng())

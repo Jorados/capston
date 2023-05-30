@@ -65,6 +65,9 @@ public class CenterReservation {
     public void cancelReservation() {
         this.status = CenterReservationStatus.CANCELED;
     }
+    public void executeReservation() {
+        this.status = CenterReservationStatus.EXECUTED;
+    }
 
     public static CenterReservation fromRequest(Center center, User user, CreateReservationRequest request, int price) {
         return CenterReservation.builder()

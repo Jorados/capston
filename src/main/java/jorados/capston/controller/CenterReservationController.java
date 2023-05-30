@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static jorados.capston.dto.CenterReservationDto.*;
@@ -48,10 +49,12 @@ public class CenterReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationInfo);
     }
 
-    // 센터 예약 수정 : 미완
+    // 센터 예약 수정
     @PatchMapping("/{centerId}/reservation/{reservationId}")
-    public void CenterReserveUpdate(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId){
-        // 이 예약 센터가 현재 인증된 사용자랑 일치하는지아닌지 판별 후에 수정.
+    public ResponseEntity<?> executeReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
+        User findUser = principalDetails.getUser();
+        centerReservationService.executeReservation(findUser, centerId, reservationId);
+        return ResponseEntity.ok().build();
     }
 
     // 센터 예약 취소
@@ -61,7 +64,7 @@ public class CenterReservationController {
         centerReservationService.deleteReservation(findUser, centerId, reservationId);
 
         log.info("회원 번호 [ " + findUser.getId() + " ] 로 예약이 취소되었습니다..");
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>("예약이 취소되었습니다.",null,HttpStatus.OK);
     }
 
 
@@ -75,9 +78,7 @@ public class CenterReservationController {
         return ResponseEntity.ok().body(reservations);
     }
 
-    // 체육관 예약 페이지 : 미완
-
-    // 체육관 특정 예약 내역 조회
+    // 내 예약내역 상세보기
     @GetMapping("/{centerId}/reservation/{reservationId}")
     public ResponseEntity<?> getReservationInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
         User findUser = principalDetails.getUser();
@@ -85,6 +86,18 @@ public class CenterReservationController {
 
         return ResponseEntity.ok().body(reservationInfo);
     }
+
+    // 체육관 예약 페이지 정보 요청
+    @GetMapping("/{centerId}/reservation")
+    public ResponseEntity<?> getCenterReservationInfo(@PathVariable Long centerId) {
+
+        LocalDate date = LocalDate.now();
+        ReservationCenterInfoResponse reservationInfo = centerReservationService.getStadiumReservationInfo(centerId, date);
+        return ResponseEntity.ok().body(reservationInfo);
+    }
+
+
+
 
     // 체육관 가격 조회 : 미완
 

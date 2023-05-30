@@ -31,12 +31,12 @@ public class CenterReservationDto {
     // 예약내역 체육관 정보
     @Data
     @Builder
-    public static class ReservationStadiumInfoResponse {
+    public static class ReservationCenterInfoResponse {
         private CenterInfoResponseDto center; //센터 상세정보
         private String date;
         private String openTime;
         private String closeTime;
-        private int pricePerHalfHour;
+        //private int pricePerHalfHour;
         private List<String> reservedTimes;
     }
 

@@ -7,6 +7,7 @@ import jorados.capston.domain.CenterReservationCancel;
 import jorados.capston.domain.User;
 import jorados.capston.domain.type.CenterReservationStatus;
 import jorados.capston.domain.type.ReservingTime;
+import jorados.capston.dto.response.CenterInfoResponseDto;
 import jorados.capston.exception.*;
 import jorados.capston.repository.CenterRepository;
 import jorados.capston.repository.CenterReservationCancelRepository;
@@ -94,12 +95,65 @@ public class CenterReservationService {
         centerReservationCancelRepository.save(reservationCancel);
     }
 
+    // 예약정보 수정하기
+    public void executeReservation(User user, Long centerId, Long reservationId) {
+        CenterReservation reservation = centerReservationRepository.findById(reservationId).orElseThrow(() -> new ReservationNotFound());
+
+        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+
+        if (!reservation.getCenter().getId().equals(centerId)) {
+            throw new CenterReservationNotMatch();
+        }
+
+        if (!reservation.getUser().getId().equals(user.getId())) {
+            throw new UnAuthorizedAccess();
+        }
+
+//        사용완료할수없는 날짜 예외처리
+//        if (reservation.getReservingDate().isAfter(LocalDate.now().plusDays(1))) {
+//            throw new StadiumException(TooEarlyExecute);
+//        }
+
+        reservation.executeReservation();
+        centerReservationRepository.save(reservation);
+    }
+
+
+
+
     // 내 예약목록
     @Transactional(readOnly = true)
     public Page<ReservationResponse> getAllReservationsByUser(User user, Pageable pageable) {
         return centerReservationRepository
                 .findAllByUserOrderByReservingDateDesc(user, pageable)
                 .map(ReservationResponse::fromEntity);
+    }
+
+    // 특정 체육관 [ 예약 페이지 정보 ] 불러오기
+    @Transactional(readOnly = true)
+    public ReservationCenterInfoResponse getStadiumReservationInfo(Long centerId, LocalDate date) {
+        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
+
+        // 해당 스타디움의 해당 날짜에 이미 예약된 시간들
+        List<String> reservedTimes = new ArrayList<>();
+        centerReservationRepository
+                .findAllByCenterAndReservingDate(center, date)
+                .forEach(reservation -> {
+                    reservation.getReservingTimes().forEach(
+                            reservingTime -> {
+                                reservedTimes.add(reservingTime.getTime());
+                            }
+                    );
+                });
+
+        return ReservationCenterInfoResponse.builder()
+                .openTime(center.getOpenTime().getTime())
+                .closeTime(center.getCloseTime().getTime())
+                .center(CenterInfoResponseDto.fromEntity(center))
+                .date(date.toString())
+                //.pricePerHalfHour()
+                .reservedTimes(reservedTimes)
+                .build();
     }
 
 
@@ -116,8 +170,8 @@ public class CenterReservationService {
             throw new CenterReservationNotMatch();
         }
 
-        // 예약한사람이랑 현재 접속자랑 일치하지 않을경우
-        if (!reservation.getCenter().getUser().getId().equals(user.getId())) {
+        // 예약한 사람이랑 현재 접속자랑 일치하지 않을경우
+        if (!reservation.getUser().getId().equals(user.getId())) {
             throw new UnAuthorizedAccess();
         }
 

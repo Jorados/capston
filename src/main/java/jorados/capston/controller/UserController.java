@@ -59,13 +59,8 @@ public class UserController {
 
     //권한 테스트
     @GetMapping("/api/user/1")
-    public void customerPage(HttpServletResponse response) throws IOException {
-        ObjectMapper om = new ObjectMapper();
-        String str = "일반회원 페이지";
-        String responseBody = om.writeValueAsString(str);
-        response.setContentType("application/json; charset=utf-8");
-        response.setStatus(200);
-        response.getWriter().println(responseBody);
+    public ResponseEntity<?> customerPage() {
+        return new ResponseEntity<>("일반 회원 페이지",null,HttpStatus.OK);
     }
 
     //권한 테스트
