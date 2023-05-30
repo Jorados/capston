@@ -41,23 +41,16 @@
  - request.body : x     
 ![image](https://github.com/Jorados/capston/assets/100845256/5fd16a22-ded7-4967-9c05-e7a493082164)   
 
-### 2. 나의 특정 예약 상세 - 미개발    
- - "localhost:8080/center/reservations/{reservationId}"
- - Http 메서드 : GET   
- - request URI (PathVariable 방식) : reservationId
- - request.header : 인증토큰   
- - request.body : x     
+### 2. 내 예약 내역 상세보기   
+ - "localhost:8080/center/{centerId}/reservation/{reservationId}"    
+ - Http 메서드 : GET         
+ - request URI (PathVariable 방식) : centerId , reservationId         
+ - request.header : 인증토큰       
+ - request.body : x         
 
-### 3. 어떠한 체육관 특정 예약 정보 조회     
- - "localhost:8080/center/{centerId}/reservation/{reservationId}"
- - Http 메서드 : GET      
- - request URI (PathVariable 방식) : centerId , reservationId      
- - request.header : 인증토큰     
- - request.body : x       
+![image](https://github.com/Jorados/capston/assets/100845256/1f2c00f2-c8cd-4b90-88ce-38a6c001f86f)     
 
-![image](https://github.com/Jorados/capston/assets/100845256/1f2c00f2-c8cd-4b90-88ce-38a6c001f86f)         
-
-### 4. 체육관 예약 페이지 정보 요청 
+### 3. 체육관 예약 페이지 정보 요청 
  - "localhost:8080/center/{centerId}/reservation"
  - Http 메서드 : GET      
  - request URI (PathVariable 방식) : centerId  
