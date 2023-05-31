@@ -19,7 +19,7 @@
  - request.header : 인증토큰   
  - request.body : 예약정보 ( reservingTimes , headCount ) 
 
-![image](https://github.com/Jorados/capston/assets/100845256/ca4a123d-4174-44a2-ada3-1d03c77329c0)   
+![image](https://github.com/Jorados/capston/assets/100845256/fd0ab95d-149b-4cf3-9b56-e5c0cc2c2ba3)    
 
 ### 2. 센터 예약정보 취소   
  - "localhost:8080/center/{centerId}/reservation/{reservationId}"  
@@ -55,8 +55,9 @@
  - Http 메서드 : GET      
  - request URI (PathVariable 방식) : centerId  
  - request.header : 인증토큰     
- - request.body : x 
-![image](https://github.com/Jorados/capston/assets/100845256/e8458214-79b6-450b-bfc5-664bbd9e57e7)   
+ - request.body : 파라미터 형식으로 날짜(date) --> 보내면 해당 날짜 예약정보와 해당 센터정보 response      
+
+![image](https://github.com/Jorados/capston/assets/100845256/99433152-5908-4e71-8478-ba1376ab6cd9)       
 
 
 
