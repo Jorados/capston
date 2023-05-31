@@ -42,12 +42,12 @@ public class CenterReservationService {
         Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
 
         // 2. 에러처리 ( 겹치는 예약 )
-        if (isAlreadyReservedTimes(findCenter, LocalDate.now(), request.getReservingTimes())) {
+        if (isAlreadyReservedTimes(findCenter, request.getReservingDate() , request.getReservingTimes())) {
             throw new AlreadyReservedTime();
         }
 
         // 3. 예약 생성
-        CenterReservation reservation = CenterReservation.fromRequest(findCenter, user, request, getPrice(centerId, LocalDate.now(), request).getPrice());
+        CenterReservation reservation = CenterReservation.fromRequest(findCenter, user, request, getPrice(centerId, request.getReservingDate(), request).getPrice());
 
         // 4. 저장
         centerReservationRepository.save(reservation);
@@ -63,7 +63,8 @@ public class CenterReservationService {
                         .map(ReservingTime::getTime)
                         .collect(Collectors.toList()))
                 .pricePerHalfHour(reservation.getPrice())
-                .date(LocalDate.now())
+                .date(reservation.getReservingDate().toString())
+                //.date(LocalDate.now())
                 .build();
     }
 

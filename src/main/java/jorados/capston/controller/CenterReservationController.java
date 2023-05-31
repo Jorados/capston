@@ -89,9 +89,12 @@ public class CenterReservationController {
 
     // 체육관 예약 페이지 정보 요청
     @GetMapping("/{centerId}/reservation")
-    public ResponseEntity<?> getCenterReservationInfo(@PathVariable Long centerId) {
+    public ResponseEntity<?> getCenterReservationInfo(@PathVariable Long centerId,
+                                                      @RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 
-        LocalDate date = LocalDate.now();
+        if (date == null) {
+            date = LocalDate.now();
+        }
         ReservationCenterInfoResponse reservationInfo = centerReservationService.getStadiumReservationInfo(centerId, date);
         return ResponseEntity.ok().body(reservationInfo);
     }

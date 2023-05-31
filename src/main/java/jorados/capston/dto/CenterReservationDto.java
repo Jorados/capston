@@ -20,12 +20,9 @@ public class CenterReservationDto {
     @Builder
     public static class CreateReservationRequest {
 
-//        @DateTimeFormat(pattern = "yyyy-MM-dd")
-//        private LocalDate reservingDate;
+        private LocalDate reservingDate;
         List<String> reservingTimes;
         private int headCount;
-        //private List<ItemRequest> items;
-        //private String paymentType;
     }
 
     // 예약내역 체육관 정보
@@ -47,7 +44,7 @@ public class CenterReservationDto {
         private Long reservationId;
         private Long centerId;
         private String centerName;
-        private LocalDate date;
+        private String date;
         private String openTime;
         private String closeTime;
         private int pricePerHalfHour;
