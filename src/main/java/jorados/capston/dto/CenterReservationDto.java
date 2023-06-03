@@ -50,6 +50,7 @@ public class CenterReservationDto {
         private int pricePerHalfHour;
         //private List<ItemResponse> rentalItems;
         private List<String> reservedTimes;
+        private int headCount;
     }
 
     // 예약 상세내역 정보
@@ -84,6 +85,7 @@ public class CenterReservationDto {
                     .headCount(reservation.getHeadCount())
                     .price(reservation.getPrice())
                     .imgUrl(reservation.getCenter().getImgUrl())
+                    .headCount(reservation.getHeadCount())
 //                    .paymentType(reservation.getPaymentType().toString())
 //                    .items(ItemResponse.fromReservation(reservation))
                     .status(reservation.getStatus().toString())

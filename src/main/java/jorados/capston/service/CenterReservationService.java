@@ -63,6 +63,7 @@ public class CenterReservationService {
                         .map(ReservingTime::getTime)
                         .collect(Collectors.toList()))
                 .pricePerHalfHour(reservation.getPrice())
+                .headCount(reservation.getHeadCount())
                 .date(reservation.getReservingDate().toString())
                 //.date(LocalDate.now())
                 .build();
@@ -86,14 +87,15 @@ public class CenterReservationService {
             throw new CouldNotCancelReservation();
         }
 
-        reservation.cancelReservation();
-        CenterReservationCancel reservationCancel = CenterReservationCancel.builder()
-                .reservation(reservation)
-                .price(reservation.getPrice())
-                .build();
+        //reservation.cancelReservation();
+//        CenterReservationCancel reservationCancel = CenterReservationCancel.builder()
+//                .reservation(reservation)
+//                .price(reservation.getPrice())
+//                .build();
 
-        centerReservationRepository.save(reservation);
-        centerReservationCancelRepository.save(reservationCancel);
+        //centerReservationRepository.save(reservation);
+        centerReservationRepository.delete(reservation);
+        //centerReservationCancelRepository.save(reservationCancel);
     }
 
     // 예약정보 수정하기
