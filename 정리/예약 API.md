@@ -1,4 +1,4 @@
-## 체육관 API 및 예약 API 설계      
+## 1. 체육관 API - 조회 , 검색   
 
 ### 1. 체육관 조회    
  - "localhost:8080/center/all"   
