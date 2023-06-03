@@ -17,8 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 // 시간 남으면 클래스 분리 하자.
 @Service
@@ -137,6 +139,13 @@ public class CenterService {
     public void CenterReserveDelete(Long centerId){
         Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
         centerRepository.delete(findCenter);
+    }
+
+    @Transactional
+    public Page<Center> search(String searchValue, Pageable pageable){
+        //Page<Center> centersPage = centerRepository.findByCenter_nameContainingIgnoreCase(searchValue, pageable);
+        Page<Center> centersPage = centerRepository.findAllSearch(searchValue, pageable);
+        return centersPage;
     }
 
 

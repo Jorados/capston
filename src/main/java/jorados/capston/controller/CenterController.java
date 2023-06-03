@@ -65,4 +65,11 @@ public class CenterController {
         return new ResponseEntity<>(new ResponseDto<>(1, "저장 성공", center.getCenter_name()), HttpStatus.CREATED);
     }
 
+    // 센터 검색
+    @GetMapping("/search")
+    public ResponseEntity<Page<Center>> searchCenter(@RequestParam String searchValue, Pageable pageable) {
+        Page<Center> CenterSearch = centerService.search(searchValue, pageable);
+        return ResponseEntity.ok().body(CenterSearch);
+    }
+
 }
