@@ -1,13 +1,22 @@
-## 체육관 조회 API 및 예약 API 설계      
+## 체육관 API 및 예약 API 설계      
 
 ### 1. 체육관 조회    
  - "localhost:8080/center/all"   
  - Http 메서드 : GET   
  - request.header : x   
  - request.body : x   
- - response :  Page< Center >  --> 페이지 객체를 포함하는 리스트타입의 Center 정보   
+ - response :  Page< Center >
 
 ![image](https://github.com/Jorados/capston/assets/100845256/2586f216-1ec9-438b-aeca-7d1585d9a8b5)      
+
+### 2. 체육관 검색
+ - "localhost:8080/center/search"      
+ - Http 메서드 : GET     
+ - request.header : x     
+ - request.body :    
+ - response :  Page< Center >   
+ - param 형태로 page,size / searchValue    
+![image](https://github.com/Jorados/capston/assets/100845256/11646d52-635e-42e1-b2ca-d97dff4569e3)       
 
 
 ## 2. 예약 API - 센터 예약 /  센터 예약정보 취소      
