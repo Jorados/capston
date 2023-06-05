@@ -78,7 +78,7 @@ public class CenterReservationDto {
                     .centerId(reservation.getCenter().getId())
                     .name(reservation.getCenter().getCenter_name())
                     .user(CenterReservationDto.UserResponse.fromEntity(reservation.getUser()))
-                    //.reservingDate(reservation.getReservingDate().toString())
+                    .reservingDate(reservation.getReservingDate().toString())
                     .reservingTime(reservation.getReservingTimes().stream()
                             .map(ReservingTime::getTime)
                             .collect(Collectors.toList()))
