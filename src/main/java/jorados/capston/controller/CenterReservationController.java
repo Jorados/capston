@@ -2,10 +2,7 @@ package jorados.capston.controller;
 
 
 import jorados.capston.config.auth.PrincipalDetails;
-import jorados.capston.domain.Center;
 import jorados.capston.domain.User;
-import jorados.capston.dto.CenterReservationDto;
-import jorados.capston.exception.CenterNotFound;
 import jorados.capston.repository.CenterRepository;
 import jorados.capston.service.CenterReservationService;
 import jorados.capston.service.CenterService;
@@ -14,14 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static jorados.capston.dto.CenterReservationDto.*;
 
@@ -95,9 +90,6 @@ public class CenterReservationController {
         ReservationCenterInfoResponse reservationInfo = centerReservationService.getStadiumReservationInfo(centerId, date);
         return ResponseEntity.ok().body(reservationInfo);
     }
-
-
-
 
     // 체육관 가격 조회 : 미완
 
