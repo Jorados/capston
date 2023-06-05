@@ -73,7 +73,7 @@ public class CenterReservation {
         return CenterReservation.builder()
                 .center(center)
                 .user(user)
-                .reservingDate(LocalDate.now())
+                .reservingDate(request.getReservingDate())
                 .reservingTimes(request.getReservingTimes().stream()
                         .map(time -> ReservingTime.findTime(time))
                         .collect(Collectors.toList()))

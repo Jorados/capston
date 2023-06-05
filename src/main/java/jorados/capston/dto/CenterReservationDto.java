@@ -20,12 +20,9 @@ public class CenterReservationDto {
     @Builder
     public static class CreateReservationRequest {
 
-//        @DateTimeFormat(pattern = "yyyy-MM-dd")
-//        private LocalDate reservingDate;
+        private LocalDate reservingDate;
         List<String> reservingTimes;
         private int headCount;
-        //private List<ItemRequest> items;
-        //private String paymentType;
     }
 
     // 예약내역 체육관 정보
@@ -47,12 +44,13 @@ public class CenterReservationDto {
         private Long reservationId;
         private Long centerId;
         private String centerName;
-        private LocalDate date;
+        private String date;
         private String openTime;
         private String closeTime;
         private int pricePerHalfHour;
         //private List<ItemResponse> rentalItems;
         private List<String> reservedTimes;
+        private int headCount;
     }
 
     // 예약 상세내역 정보
@@ -87,6 +85,7 @@ public class CenterReservationDto {
                     .headCount(reservation.getHeadCount())
                     .price(reservation.getPrice())
                     .imgUrl(reservation.getCenter().getImgUrl())
+                    .headCount(reservation.getHeadCount())
 //                    .paymentType(reservation.getPaymentType().toString())
 //                    .items(ItemResponse.fromReservation(reservation))
                     .status(reservation.getStatus().toString())
