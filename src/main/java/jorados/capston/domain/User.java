@@ -47,6 +47,10 @@ public class User {
     @JsonIgnore
     private List<Center> center = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Post> post = new ArrayList<>();
+
     private String provider;
     private String providerId;
 
