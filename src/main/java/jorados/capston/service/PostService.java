@@ -77,7 +77,6 @@ public class PostService {
                     postEdit.getContent() != null ? postEdit.getContent() : findPost.getContent()
             );
         }
-
     }
 
     // 글 삭제
