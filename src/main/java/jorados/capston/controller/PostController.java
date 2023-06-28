@@ -33,10 +33,10 @@ public class PostController {
 
     // 글 생성
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(PostRequest postRequest, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<?> createPost(@RequestBody PostRequest postRequest, @AuthenticationPrincipal PrincipalDetails principalDetails){
         User findUser = principalDetails.getUser();
         postService.createPost(postRequest,findUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body("글 생성 되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("글이 생성 되었습니다.");
     }
 
     // 모든 글 읽기
@@ -54,7 +54,7 @@ public class PostController {
     }
 
     // 글 수정
-    @PutMapping("/update/{postId}")
+    @PatchMapping("/update/{postId}")
     public ResponseEntity<?> updatePost(@PathVariable Long postId,@RequestBody PostEdit postEdit,@AuthenticationPrincipal PrincipalDetails principalDetails){
 
         User findUser = principalDetails.getUser();
@@ -64,7 +64,7 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("글 작성자와 회원 정보가 일치하지 않습니다.");
         }
         else{
-            postService.updatePost(postId,postEdit,findUser);
+            postService.updatePost(postId,postEdit);
             return ResponseEntity.status(HttpStatus.OK).body("글 수정이 완료 되었습니다");
         }
     }

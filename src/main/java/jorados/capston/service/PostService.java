@@ -46,6 +46,7 @@ public class PostService {
 
         return posts.map(post -> {
             PostResponse postResponse = PostResponse.builder()
+                    .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
                     .user(post.getUser())
@@ -69,14 +70,12 @@ public class PostService {
 
     // 글 수정
     @Transactional
-    public void updatePost(Long postId,PostEdit postEdit,User user) {
+    public void updatePost(Long postId,PostEdit postEdit) {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());
-        if(findPost.getUser() == user){
-            findPost.edit(
-                    postEdit.getTitle() != null ? postEdit.getTitle() : findPost.getTitle(),
-                    postEdit.getContent() != null ? postEdit.getContent() : findPost.getContent()
-            );
-        }
+        findPost.edit(
+                postEdit.getTitle() != null ? postEdit.getTitle() : findPost.getTitle(),
+                postEdit.getContent() != null ? postEdit.getContent() : findPost.getContent()
+        );
     }
 
     // 글 삭제
