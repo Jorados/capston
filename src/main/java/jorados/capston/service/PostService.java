@@ -60,6 +60,7 @@ public class PostService {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());
 
         PostResponse postResponse = PostResponse.builder()
+                .id(findPost.getId())
                 .title(findPost.getTitle())
                 .content(findPost.getContent())
                 .user(findPost.getUser())
