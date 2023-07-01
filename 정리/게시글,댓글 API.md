@@ -4,7 +4,7 @@
 매핑타입 : @PostMapping   
 매핑주소 : /post/create   
 request: Requestboy에 글 생성정보 , 로그인상태   
-response : "글이 생성 되었습니다."   
+response : "글이 생성 되었습니다."        
 ![image](https://github.com/Jorados/capston/assets/100845256/c8c90cd9-9142-46d0-a7bb-8f84fe4e4142)   
 
 ### 2. 모든 글 조회    
