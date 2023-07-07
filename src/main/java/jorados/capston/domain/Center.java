@@ -71,7 +71,6 @@ public class Center implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-
     /**
      * 생성자
      */
@@ -80,8 +79,6 @@ public class Center implements Serializable {
         this.user = user;
         user.getCenter().add(this);
     }
-
-
 
     @Builder
     public Center(Long id, String center_name, double lat, double lng, CenterStatus status, ReservingTime openTime, ReservingTime closeTime, User user,String address,Integer price,String imgUrl) {

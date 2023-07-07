@@ -123,7 +123,7 @@ public class CenterService {
         centerRepository.save(saveCenter);
     }
 
-    // 예약한 센터 - Read
+    // 내가 만든 센터 - Read
     public List<Center> CenterReserveRead(User user){
         User findUser = userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new UserNotFound());
         List<Center> findCenter = centerRepository.findCenter(findUser.getId());
@@ -135,7 +135,7 @@ public class CenterService {
 
     }
 
-    // 예약한 센터 삭제
+    // 센터 삭제
     public void CenterReserveDelete(Long centerId){
         Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
         centerRepository.delete(findCenter);
