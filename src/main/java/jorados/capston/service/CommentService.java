@@ -70,6 +70,7 @@ public class CommentService {
         return comments.stream()
                 .map(comment -> {
                     CommentResponse commentResponse = CommentResponse.builder()
+                            .id(comment.getId())
                             .content(comment.getContent())
                             .post(comment.getPost())
                             .user(comment.getUser())
