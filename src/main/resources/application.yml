@@ -40,10 +40,6 @@ spring:
               - email
               - profile
 
-  profiles:
-    include: test
-    active: test
-
 logging.level:
   org.hibernate.SQL: debug
 
