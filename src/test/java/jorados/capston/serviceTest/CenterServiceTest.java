@@ -26,7 +26,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-@Profile("test")
 public class CenterServiceTest {
     @Autowired
     CenterService centerService;

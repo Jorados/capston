@@ -22,7 +22,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @SpringBootTest
-@Profile("test")
 public class PostServiceTest {
 
     @Autowired
