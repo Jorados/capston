@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class CenterServiceTest {
     @Autowired
     CenterService centerService;
