@@ -36,5 +36,16 @@ deploy:
     local_dir: deploy
     wait-until-deployed: true
 
+  - provider: codedeploy
+    assess_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: capston-springboot-build
+    key: capston.zip
+    bundle_type: zip
+    application: capston
+    deployment_group: capston-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+
 before_install:
   - chmod +x gradlew
