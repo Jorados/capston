@@ -20,5 +20,21 @@ notifications:
     recipients:
       - seongjin8860@naver.com
 
+before_deploy:
+  - zip -r capston *
+  - mkdir -p deploy
+  - mv capston.zip deploy/capston.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: capston-springboot-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
+
 before_install:
   - chmod +x gradlew
