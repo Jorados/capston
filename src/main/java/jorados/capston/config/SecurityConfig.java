@@ -85,6 +85,7 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager());
 
         http.authorizeHttpRequests()
+                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
                 .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
                 //.antMatchers("/center/**").authenticated()// center관련된거는 전부 일반 User면 허용
