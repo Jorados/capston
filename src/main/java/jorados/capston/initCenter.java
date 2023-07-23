@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
 @Component
 @RequiredArgsConstructor
 public class initCenter {
-
     private final InitCenterService initCenterService;
 
     @PostConstruct
@@ -31,8 +30,6 @@ public class initCenter {
 
         @Transactional
         public void init(){
-
-
             Center center1 = Center.builder()
                     .center_name("칠암캠운동장")
                     .lat(35.181368)

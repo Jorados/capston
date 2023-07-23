@@ -139,7 +139,6 @@ public class CenterReservationDto {
                     .reservationId(reservation.getId())
                     .name(reservation.getUser().getUsername())
                     .reservingDate(reservation.getReservingDate().toString())
-                    .paymentDate(reservation.getCreatedAt().toString())
                     .status(reservation.getStatus().toString())
                     .build();
         }

@@ -88,7 +88,7 @@ public class SecurityConfig {
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
                 .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
-                //.antMatchers("/center/**").authenticated()// center관련된거는 전부 일반 User면 허용
+                .antMatchers("/centerReservation/**").authenticated()// 예약 관련된 거는 전부 일반유저면 허용
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()

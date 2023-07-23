@@ -31,7 +31,6 @@ public class UserRespDto {
         public LoginRespDto(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
-            this.createdAt = CustomDateUtil.toStringFormat(user.getCreatedAt());
         }
     }
 }

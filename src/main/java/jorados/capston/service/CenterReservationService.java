@@ -3,14 +3,12 @@ package jorados.capston.service;
 
 import jorados.capston.domain.Center;
 import jorados.capston.domain.CenterReservation;
-import jorados.capston.domain.CenterReservationCancel;
 import jorados.capston.domain.User;
 import jorados.capston.domain.type.CenterReservationStatus;
 import jorados.capston.domain.type.ReservingTime;
 import jorados.capston.dto.response.CenterInfoResponseDto;
 import jorados.capston.exception.*;
 import jorados.capston.repository.CenterRepository;
-import jorados.capston.repository.CenterReservationCancelRepository;
 import jorados.capston.repository.CenterReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +30,6 @@ import static jorados.capston.dto.CenterReservationDto.*;
 public class CenterReservationService {
     private final CenterReservationRepository centerReservationRepository;
     private final CenterRepository centerRepository;
-    private final CenterReservationCancelRepository centerReservationCancelRepository;
 
     // 예약하기
     @Transactional

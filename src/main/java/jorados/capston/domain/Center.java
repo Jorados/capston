@@ -59,10 +59,6 @@ public class Center implements Serializable {
      *  연관관계 매핑
      */
 
-//    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<CenterImg> imgs = new ArrayList<>(); // 한 시설에 여러장의 사진 (일대다)
-
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CenterReservation> center_reservations = new ArrayList<>(); // 한 시설에 예약 여러 건 (일대 다)

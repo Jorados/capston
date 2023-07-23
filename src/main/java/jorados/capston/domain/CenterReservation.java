@@ -53,18 +53,9 @@ public class CenterReservation {
     @Column(nullable = false)
     private List<ReservingTime> reservingTimes = new ArrayList<>();
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
     // 인원수
     private int headCount;
 
-    public void cancelReservation() {
-        this.status = CenterReservationStatus.CANCELED;
-    }
     public void executeReservation() {
         this.status = CenterReservationStatus.EXECUTED;
     }
@@ -80,7 +71,6 @@ public class CenterReservation {
                 .price(price)
                 .headCount(request.getHeadCount())
                 .status(CenterReservationStatus.RESERVED)
-                //.paymentType(PaymentType.valueOf(request.getPaymentType()))
                 .build();
     }
 

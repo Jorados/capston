@@ -36,14 +36,6 @@ public class User implements Serializable {
     //@Column(nullable = false)
     private UserEnum role;  // 권한
 
-    @LastModifiedDate
-    //@Column(nullable = false)
-    private LocalDateTime updateAt; //회원 정보 수정일자
-
-    @CreatedDate
-    //@Column(nullable = false)
-    private LocalDateTime createdAt; //회원 생성일자
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Center> center = new ArrayList<>();
@@ -56,21 +48,17 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Comment> comment = new ArrayList<>();
 
-    private String provider;
-    private String providerId;
+//    private String provider;
+//    private String providerId;
 
 
     @Builder
-    public User(Long id, String username, String password, String email, UserEnum role, LocalDateTime updateAt, LocalDateTime createdAt, String provider, String providerId) {
+    public User(Long id, String username, String password, String email, UserEnum role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.updateAt = updateAt;
-        this.createdAt = createdAt;
-        this.provider = provider;
-        this.providerId = providerId;
     }
 
     public void edit(String username,String password, String email){

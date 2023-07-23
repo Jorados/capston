@@ -24,12 +24,8 @@ import static jorados.capston.dto.CenterReservationDto.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/center")
+@RequestMapping("/centerReservation")
 public class CenterReservationController {
-
-    private final UserService userService;
-    private final CenterService centerService;
-    private final CenterRepository centerRepository;
     private final CenterReservationService centerReservationService;
 
     // 센터 예약하기
@@ -94,7 +90,5 @@ public class CenterReservationController {
         ReservationCenterInfoResponse reservationInfo = centerReservationService.getStadiumReservationInfo(centerId, date);
         return ResponseEntity.ok().body(reservationInfo);
     }
-
-    // 체육관 가격 조회 : 미완
 
 }
