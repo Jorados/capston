@@ -4,6 +4,7 @@ package jorados.capston.service;
 import jorados.capston.domain.User;
 import jorados.capston.domain.type.UserEnum;
 import jorados.capston.exception.DuplicateException;
+import jorados.capston.exception.DuplicateExceptionNickname;
 import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.UserRepository;
 import jorados.capston.dto.request.UserEdit;
@@ -30,6 +31,7 @@ public class UserService {
         User saveUser = User.builder()
                 .username(user.getUsername())
                 .password(encPassword)
+                .nickname(user.getNickname())
                 .email(user.getEmail())
                 .role(UserEnum.CUSTOMER)
                 .build();
@@ -56,12 +58,20 @@ public class UserService {
 
     private void validateDuplicateMember(User user) {
         List<User> findAllUser = userRepository.findAllByUsername(user.getUsername());
+        List<User> findAllNickname = userRepository.findAllByNickname(user.getNickname());
 
-        //userName겹치는 경우
+        //username 겹치는 경우
         if (!findAllUser.isEmpty()) {
-            log.info("회원이름 중복 회원 발생");
+            log.info("회원 아이디 중복 발생");
             throw new DuplicateException();
         }
+
+        //nickname 겹치는 경우
+        if(!findAllNickname.isEmpty()){
+            log.info("회원 닉네임 중복 발생");
+            throw new DuplicateExceptionNickname();
+        }
+
     }
 
 

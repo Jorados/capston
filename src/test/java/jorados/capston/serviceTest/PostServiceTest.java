@@ -53,6 +53,7 @@ public class PostServiceTest {
                 .build();
 
         //postService.createPost(postRequest,user);
+
         Assertions.assertThat(postRequest.getTitle()).isEqualTo("제목1");
         Assertions.assertThat(postRequest.getContent()).isEqualTo("내용1");
     }
@@ -93,6 +94,7 @@ public class PostServiceTest {
                 .title("제목")
                 .content("내용")
                 .build();
+
         postRepository.save(post);
         Post findPost = postRepository.findById(post.getId()).orElseThrow(() -> new PostNotFound());
 

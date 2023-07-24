@@ -11,6 +11,7 @@ import jorados.capston.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,6 @@ public class PostService {
     // 글 생성
     @Transactional
     public void createPost(PostRequest post, User user){
-
         Post savePost = Post.builder()
                         .title(post.getTitle())
                         .content(post.getContent())
@@ -42,17 +42,30 @@ public class PostService {
 
     // 모든 글 읽기
     public Page<PostResponse> readAll(Pageable pageable){
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Object[]> postWithCommentCount;
 
-        return posts.map(post -> {
+        if (pageable == null) {
+            postWithCommentCount = postRepository.findAllPostsWithCommentCount(Pageable.unpaged());
+        } else {
+            postWithCommentCount = postRepository.findAllPostsWithCommentCount(pageable);
+        }
+
+        List<PostResponse> postResponses = postWithCommentCount.getContent().stream().map(data -> {
+            Post post = (Post) data[0];
+            long commentCount = (long) data[1];
+
             PostResponse postResponse = PostResponse.builder()
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
+                    .createdAt(post.getCreatedAt().toString())
                     .user(post.getUser())
+                    .commentSize(commentCount)  // 댓글 개수 추가
                     .build();
             return postResponse;
-        });
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(postResponses, pageable, postWithCommentCount.getTotalElements());
     }
 
     // 특정 글 읽기

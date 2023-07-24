@@ -100,6 +100,7 @@ public class UserController {
                 .id(loginUser.getUser().getId())
                 .username(loginUser.getUser().getUsername())
                 .email(loginUser.getUser().getEmail())
+                .nickname(loginUser.getUser().getNickname())
                 .role(UserEnum.CUSTOMER)
                 .build();
         return userResponse;

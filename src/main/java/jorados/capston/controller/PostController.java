@@ -2,12 +2,10 @@ package jorados.capston.controller;
 
 
 import jorados.capston.config.auth.PrincipalDetails;
-import jorados.capston.domain.Post;
 import jorados.capston.domain.User;
 import jorados.capston.dto.request.PostEdit;
 import jorados.capston.dto.request.PostRequest;
 import jorados.capston.dto.response.PostResponse;
-import jorados.capston.exception.PostNotFound;
 import jorados.capston.repository.PostRepository;
 import jorados.capston.service.PostService;
 import jorados.capston.service.UserService;
@@ -18,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

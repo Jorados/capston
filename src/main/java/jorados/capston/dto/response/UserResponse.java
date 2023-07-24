@@ -14,17 +14,19 @@ public class UserResponse {
     private Long id;
     private String username;
     private String password;
+    private String nickname;
     private String email;
 
     @Enumerated(EnumType.STRING)
     private UserEnum role;
 
     @Builder
-    public UserResponse(Long id, String username, String password, String email, UserEnum role) {
+    public UserResponse(Long id, String username, String password, String email,String nickname, UserEnum role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
         this.role = role;
     }
 }

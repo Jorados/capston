@@ -32,6 +32,9 @@ public class User implements Serializable {
     //@Column(nullable = false,length = 20)
     private String email; // 이메일
 
+    //@Column(nullable = false,length = 20)
+    private String nickname; // 닉네임
+
     @Enumerated(EnumType.STRING)
     //@Column(nullable = false)
     private UserEnum role;  // 권한
@@ -53,11 +56,12 @@ public class User implements Serializable {
 
 
     @Builder
-    public User(Long id, String username, String password, String email, UserEnum role) {
+    public User(Long id, String username, String password, String email,String nickname, UserEnum role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
         this.role = role;
     }
 
