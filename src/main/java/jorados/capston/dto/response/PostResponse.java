@@ -13,7 +13,6 @@ public class PostResponse {
     private String title;
     private String content;
     private String createdAt;
-
     private long commentSize;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) //프록시객체무시하고 원본객체 직렬화

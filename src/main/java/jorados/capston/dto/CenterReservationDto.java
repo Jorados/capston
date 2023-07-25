@@ -149,12 +149,14 @@ public class CenterReservationDto {
     private static class UserResponse {
         private Long id;
         private String username;
+        private String nickname;
         private String email;
 
         public static UserResponse fromEntity(User user) {
             return UserResponse.builder()
                     .id(user.getId())
                     .username(user.getUsername())
+                    .nickname(user.getNickname())
                     .email(user.getEmail())
                     .build();
         }

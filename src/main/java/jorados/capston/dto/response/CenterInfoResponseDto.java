@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class CenterInfoResponseDto {
     private Long id;
 
-    private Long memberId;
+    private Long userId;
 
     private String name;
 
@@ -27,11 +27,7 @@ public class CenterInfoResponseDto {
 
     private String address;
 
-    private String phone;
-
     private Integer price;
-
-    //private List<StadiumItemDto.Response> rentalItems;
 
     private String imgUrl;
 
@@ -43,11 +39,10 @@ public class CenterInfoResponseDto {
     public static CenterInfoResponseDto fromEntity(Center center) {
         return CenterInfoResponseDto.builder()
                 .id(center.getId())
-                //.memberId(center.getUser().getId())
+                //.userId(center.getUser().getId())
                 .name(center.getCenter_name())
                 .lat(center.getLat())
                 .lnt(center.getLng())
-                //.phone(stadium.getPhone())
                 .address(center.getAddress())
                 .price(center.getPrice())
                 .openTime(center.getOpenTime().getTime())

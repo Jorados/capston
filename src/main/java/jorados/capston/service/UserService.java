@@ -46,6 +46,7 @@ public class UserService {
                 .id(findUser.getId())
                 .username(findUser.getUsername())
                 .password(findUser.getPassword())
+                .nickname(findUser.getNickname())
                 .email(findUser.getEmail())
                 .build();
         return userResponse;

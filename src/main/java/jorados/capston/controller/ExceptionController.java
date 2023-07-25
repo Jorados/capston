@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class ExceptionController {
+
     //@Valid 예외처리
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     //@Valid로 인한 메소드 에러가 발생했을때만 이 컨트롤러가 에러를 잡아주게 끔
@@ -31,7 +32,7 @@ public class ExceptionController {
         return response;
     }
 
-    //직접만든 예외처리
+    //직접만든 예외처리를 처리
     @ResponseBody
     @ExceptionHandler(SeongjinException.class)
     public ResponseEntity<ErrorResponse> seongjinException(SeongjinException e){

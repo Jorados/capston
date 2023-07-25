@@ -40,8 +40,9 @@ public class PostService {
         postRepository.save(savePost);
     }
 
-    // 모든 글 읽기
+    // 모든 글 읽기 -> 페이지 객체 존재 유무에 따라 다르게.
     public Page<PostResponse> readAll(Pageable pageable){
+        //Page<Object[]> postWithCommentCount = postRepository.findAllPostsWithCommentCount(pageable);
         Page<Object[]> postWithCommentCount;
 
         if (pageable == null) {

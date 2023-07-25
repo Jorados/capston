@@ -86,9 +86,12 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile").permitAll()
-                .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함.
-                .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
-                .antMatchers("/centerReservation/**").authenticated()// 예약 관련된 거는 전부 일반유저면 허용
+                .antMatchers("/api/user/**").authenticated() //여긴 그냥 접속 되야함. //권한 테스트
+                .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨 //권한 테스트
+                .antMatchers("/centerReservation/**").authenticated() // 예약 관련된 거는 전부 일반유저면 허용
+                .antMatchers("/center/**").authenticated()
+                .antMatchers("/post/**").authenticated()
+                .antMatchers("/comment/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()

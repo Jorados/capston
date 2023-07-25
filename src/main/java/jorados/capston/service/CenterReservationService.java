@@ -134,7 +134,7 @@ public class CenterReservationService {
     public ReservationCenterInfoResponse getStadiumReservationInfo(Long centerId, LocalDate date) {
         Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
 
-        // 해당 스타디움의 해당 날짜에 이미 예약된 시간들
+        // 해당 체육관의 해당 날짜에 이미 예약된 시간들
         List<String> reservedTimes = new ArrayList<>();
         centerReservationRepository
                 .findAllByCenterAndReservingDate(center, date)
@@ -151,7 +151,6 @@ public class CenterReservationService {
                 .closeTime(center.getCloseTime().getTime())
                 .center(CenterInfoResponseDto.fromEntity(center))
                 .date(date.toString())
-                //.pricePerHalfHour()
                 .reservedTimes(reservedTimes)
                 .build();
     }
