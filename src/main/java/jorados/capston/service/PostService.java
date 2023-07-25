@@ -100,6 +100,26 @@ public class PostService {
         postRepository.delete(findPost);
     }
 
+    // 내가 쓴 글 조회
+    public Page<PostResponse> MyPost(User user,Pageable pageable){
+        Page<Post> myPosts = postRepository.findByUser(user, pageable);
+
+        List<PostResponse> postResponses = myPosts.getContent().stream().map(post -> {
+            PostResponse postResponse = PostResponse.builder()
+                    .id(post.getId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .createdAt(post.getCreatedAt().toString())
+                    .user(post.getUser())
+                    .build();
+            return postResponse;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(postResponses, pageable, myPosts.getTotalElements());
+    }
+
+
+
     public boolean isUserMatch(Long postId, Long userId) {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());
         return findPost.getUser().getId().equals(userId);

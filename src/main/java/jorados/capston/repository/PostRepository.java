@@ -21,6 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p, COUNT(c) as commentCount FROM Post p LEFT JOIN p.comment c GROUP BY p")
     Page<Object[]> findAllPostsWithCommentCount(Pageable pageable);
 
-
+    // 내가 쓴 글 조회
+    Page<Post> findByUser(User user, Pageable pageable);
 }
 

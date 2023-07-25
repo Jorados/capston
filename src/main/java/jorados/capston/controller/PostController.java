@@ -2,6 +2,7 @@ package jorados.capston.controller;
 
 
 import jorados.capston.config.auth.PrincipalDetails;
+import jorados.capston.domain.Post;
 import jorados.capston.domain.User;
 import jorados.capston.dto.request.PostEdit;
 import jorados.capston.dto.request.PostRequest;
@@ -42,6 +43,15 @@ public class PostController {
         Page<PostResponse> findAllPosts = postService.readAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(findAllPosts);
     }
+
+    // 내가 쓴 글 조회
+    @GetMapping("/myPosts")
+    public ResponseEntity<?> readAllMyPost(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        User findUser = principalDetails.getUser();
+        Page<PostResponse> posts = postService.MyPost(findUser, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
 
     // 특정 글 읽기
     @GetMapping("/read/{postId}")
