@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 public class Post{
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
@@ -39,10 +39,9 @@ public class Post{
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @LastModifiedDate
-    private LocalDateTime updatedAt;
-
+    private LocalDate updatedAt;
 
     @Builder
     public Post(Long id, String title, String content, User user) {
