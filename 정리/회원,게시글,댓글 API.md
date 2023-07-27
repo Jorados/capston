@@ -1,3 +1,15 @@
+## [ User ]   
+
+### 1. 회원 정보 수정
+매핑타입 : @PatchMapping   
+매핑주소 : /user/update   
+request: Requestboy에 nickname(String),email(String) 입력하면 수정가능      
+response : "회원정보가 수정되었습니다."         
+![image](https://github.com/Jorados/capston/assets/100845256/fd0cb0b2-e048-41ce-ac68-f1c4b397c8d6)    
+![image](https://github.com/Jorados/capston/assets/100845256/d1ea6bc4-fe4a-4858-aa7f-11fff461ccef)     
+
+
+
 ## [ Post ]   
 
 ### 1. 글 생성   
