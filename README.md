@@ -1,5 +1,16 @@
-# capston : 캡스톤 디자인 프로젝트
+# [ capston : 캡스톤 디자인 프로젝트 ] : 학교 체육시설 예약 시스템  
 
+### 개요
+ - 제목 : 캡스톤 프로젝트   
+ - 개발기간 : 2023-03 ~ 2023-08 
+ - 사용언어 : Java 11    
+
+### 개발환경 (협업 총인원 : 3명)   
+ - Back : SpringBoot / jpa / Mysql    
+ - Front : React , Android (협업)   
+ - Infra : AWS ( 자동화,무중단 배포 ) 
+
+### 개발 정리
 * [환경설정](https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95.md)
 * [도메인 설계](https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/%EB%8F%84%EB%A9%94%EC%9D%B8%EC%84%A4%EA%B3%84.md)       
 * [로그인 API 설계](https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20API.md)     
