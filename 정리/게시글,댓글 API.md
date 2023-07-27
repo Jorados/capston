@@ -36,7 +36,15 @@ request: Pathvariable 방식으로 Long타입 postId, 로그인 상태
 response: "글 삭제가 완료 되었습니다"    
 ![image](https://github.com/Jorados/capston/assets/100845256/0509eb34-73b1-4ba7-bb22-7816b18d4f94)     
 
-### 6. 게시글 검색   
+### 6. 내가 쓴 댓글의 글 검색
+매핑타입: @GetMapping    
+매핑주소: /post/postByMyComments    
+request: 로그인 상태       
+response: 글 ( 중복 x )     
+![image](https://github.com/Jorados/capston/assets/100845256/047ffb77-ace0-41b6-ac2b-34ce5ae93e68)        
+
+
+### 7. 게시글 검색   
 매핑타입: @GetMapping    
 매핑주소: /post/search    
 request: RequestParam형태로 searchType(title,content/String타입) , RequestParam형태로 keyword(String타입) , Pageable객체     
