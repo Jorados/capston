@@ -6,13 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Comment{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,12 @@ public class Comment{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDate createdAt;
+    @LastModifiedDate
+    private LocalDate updatedAt;
 
     @Builder
     public Comment(Long id,String content, Post post, User user) {

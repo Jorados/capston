@@ -1,13 +1,17 @@
 package jorados.capston.service;
 
 
+import jorados.capston.domain.Comment;
 import jorados.capston.domain.Post;
 import jorados.capston.domain.User;
 import jorados.capston.dto.request.PostEdit;
 import jorados.capston.dto.request.PostRequest;
+import jorados.capston.dto.response.CommentResponse;
 import jorados.capston.dto.response.PostResponse;
 import jorados.capston.exception.PostNotFound;
+import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.PostRepository;
+import jorados.capston.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,6 +31,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     // 글 생성
     @Transactional
@@ -118,7 +123,49 @@ public class PostService {
         return new PageImpl<>(postResponses, pageable, myPosts.getTotalElements());
     }
 
+    // 내가 쓴 댓글의 글 조회
+    public Page<PostResponse> MyPostsByComment(User user, Pageable pageable){
+        Long userId = user.getId();
 
+        Page<Post> myPosts = postRepository.findPostsByUserId(userId, pageable);
+
+        List<PostResponse> postResponses = myPosts.getContent().stream().map(post -> {
+            PostResponse postResponse = PostResponse.builder()
+                    .id(post.getId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .createdAt(post.getCreatedAt().toString())
+                    .user(post.getUser())
+                    .build();
+            return postResponse;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(postResponses, pageable, myPosts.getTotalElements());
+    }
+
+    // 검색(title,content) 글 조회
+    public Page<PostResponse> searchPostsByKeyword(String keyword, String searchType, Pageable pageable) {
+        Page<Post> posts;
+        if ("title".equals(searchType)) {
+            posts = postRepository.findByTitleContaining(keyword, pageable);
+        } else if ("content".equals(searchType)) {
+            posts = postRepository.findByContentContaining(keyword, pageable);
+        } else {
+            posts = postRepository.findAll(pageable);
+        }
+        List<PostResponse> postResponses = posts.getContent().stream().map(post -> {
+            PostResponse postResponse = PostResponse.builder()
+                    .id(post.getId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .createdAt(post.getCreatedAt().toString())
+                    .user(post.getUser())
+                    .build();
+            return postResponse;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(postResponses, pageable, posts.getTotalElements());
+    }
 
     public boolean isUserMatch(Long postId, Long userId) {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());

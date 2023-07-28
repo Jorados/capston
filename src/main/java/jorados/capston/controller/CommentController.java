@@ -57,6 +57,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
 
+
     //댓글 수정
     @PatchMapping("/update/{commentId}")
     public ResponseEntity<?> commentUpdate(@PathVariable Long commentId,@RequestBody CommentEdit commentEdit,@AuthenticationPrincipal PrincipalDetails principalDetails){

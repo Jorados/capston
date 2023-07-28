@@ -6,6 +6,7 @@ import jorados.capston.domain.Post;
 import jorados.capston.domain.User;
 import jorados.capston.dto.request.PostEdit;
 import jorados.capston.dto.request.PostRequest;
+import jorados.capston.dto.response.CommentResponse;
 import jorados.capston.dto.response.PostResponse;
 import jorados.capston.repository.PostRepository;
 import jorados.capston.service.PostService;
@@ -52,6 +53,14 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
+    // 내가 쓴 댓글의 글 조회
+    @GetMapping("/postByMyComments")
+    public ResponseEntity<?> readAllMyComment(Pageable pageable, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        User findUser = principalDetails.getUser();
+        Page<PostResponse> posts = postService.MyPostsByComment(findUser, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
 
     // 특정 글 읽기
     @GetMapping("/read/{postId}")
@@ -90,6 +99,13 @@ public class PostController {
             postService.deletePost(postId);
             return ResponseEntity.status(HttpStatus.OK).body("글 삭제가 완료 되었습니다");
         }
+    }
+
+    // 게시글 검색 api -> title 검색 / content 검색
+    @GetMapping("/search")
+    public ResponseEntity<?> searchPost(@RequestParam String keyword, @RequestParam String searchType, Pageable pageable){
+        Page<PostResponse> posts = postService.searchPostsByKeyword(keyword, searchType, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
 }

@@ -8,9 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -51,6 +54,12 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Comment> comment = new ArrayList<>();
 
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDate createdAt;
+    @LastModifiedDate
+    private LocalDate updatedAt;
+
 //    private String provider;
 //    private String providerId;
 
@@ -65,10 +74,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public void edit(String username,String password, String email){
+    public void edit(String username,String password, String email,String nickname){
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
     }
 
 }

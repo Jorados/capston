@@ -105,4 +105,12 @@ public class UserController {
                 .build();
         return userResponse;
     }
+
+    // 접속 회원 닉네임 수정
+    @PatchMapping("/user/update")
+    public ResponseEntity<?> userUpdate(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody UserEdit userEdit){
+        Long UserId = principalDetails.getUser().getId();
+        userService.update(UserId,userEdit);
+        return ResponseEntity.status(HttpStatus.OK).body("수정완료 되었습니다.");
+    }
 }

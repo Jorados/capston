@@ -7,10 +7,14 @@ import jorados.capston.domain.User;
 import jorados.capston.dto.request.CommentEdit;
 import jorados.capston.dto.request.CommentRequest;
 import jorados.capston.dto.response.CommentResponse;
+import jorados.capston.dto.response.PostResponse;
 import jorados.capston.exception.CommentNotFound;
+import jorados.capston.exception.UserNotFound;
 import jorados.capston.repository.CommentRepository;
+import jorados.capston.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final EntityManager entityManager;
+    private final UserRepository userRepository;
 
     //댓글 생성
     @Transactional

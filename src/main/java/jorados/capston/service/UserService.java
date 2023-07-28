@@ -83,9 +83,11 @@ public class UserService {
         findUser.edit(
                 userEdit.getUsername() != null ? userEdit.getUsername() : findUser.getUsername(),
                 userEdit.getPassword() != null ? userEdit.getPassword() : findUser.getPassword(),
-                userEdit.getEmail() != null ? userEdit.getEmail() : findUser.getEmail()
+                userEdit.getEmail() != null ? userEdit.getEmail() : findUser.getEmail(),
+                userEdit.getNickname() != null ? userEdit.getNickname() : findUser.getNickname()
         );
     }
+
 
     public void delete(Long userId){
         User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
