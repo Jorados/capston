@@ -102,6 +102,7 @@ public class UserController {
                 .email(loginUser.getUser().getEmail())
                 .nickname(loginUser.getUser().getNickname())
                 .role(UserEnum.CUSTOMER)
+                .point(loginUser.getUser().getPoint())
                 .build();
         return userResponse;
     }
@@ -112,5 +113,13 @@ public class UserController {
         Long UserId = principalDetails.getUser().getId();
         userService.update(UserId,userEdit);
         return ResponseEntity.status(HttpStatus.OK).body("수정완료 되었습니다.");
+    }
+
+    // 회원 포인트 충전
+    @PatchMapping("/user/point")
+    public ResponseEntity<?> userPoint(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestParam(name="chargePoint") int chargePoint){
+        User findUser = principalDetails.getUser();
+        userService.ChargePoint(findUser.getId(),chargePoint);
+        return ResponseEntity.status(HttpStatus.OK).body("포인트 충전이 완료되었습니다");
     }
 }

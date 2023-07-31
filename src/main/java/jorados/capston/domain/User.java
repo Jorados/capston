@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -38,6 +39,8 @@ public class User implements Serializable {
     //@Column(nullable = false,length = 20)
     private String nickname; // 닉네임
 
+    private int point; // 포인트
+
     @Enumerated(EnumType.STRING)
     //@Column(nullable = false)
     private UserEnum role;  // 권한
@@ -63,15 +66,15 @@ public class User implements Serializable {
 //    private String provider;
 //    private String providerId;
 
-
     @Builder
-    public User(Long id, String username, String password, String email,String nickname, UserEnum role) {
+    public User(Long id, String username, String password, String email,String nickname, UserEnum role,int point) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.nickname = nickname;
         this.role = role;
+        this.point = point;
     }
 
     public void edit(String username,String password, String email,String nickname){
@@ -79,6 +82,10 @@ public class User implements Serializable {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
+    }
+
+    public void priceUpdate(int point){
+        this.point = point;
     }
 
 }
