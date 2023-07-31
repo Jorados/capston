@@ -101,7 +101,7 @@ public class PostController {
         }
     }
 
-    // 게시글 검색 api -> title 검색 / content 검색
+    // 게시글 검색 api -> title 검색 / content 검색 /
     @GetMapping("/search")
     public ResponseEntity<?> searchPost(@RequestParam String keyword, @RequestParam String searchType, Pageable pageable){
         Page<PostResponse> posts = postService.searchPostsByKeyword(keyword, searchType, pageable);
