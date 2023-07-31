@@ -116,7 +116,7 @@ public class UserController {
     }
 
     // 회원 포인트 충전
-    @PostMapping("/user/point")
+    @PatchMapping("/user/point")
     public ResponseEntity<?> userPoint(@AuthenticationPrincipal PrincipalDetails principalDetails,@RequestParam(name="chargePoint") int chargePoint){
         User findUser = principalDetails.getUser();
         userService.ChargePoint(findUser.getId(),chargePoint);
