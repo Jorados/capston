@@ -8,6 +8,13 @@ response : "회원정보가 수정되었습니다."
 ![image](https://github.com/Jorados/capston/assets/100845256/fd0cb0b2-e048-41ce-ac68-f1c4b397c8d6)    
 ![image](https://github.com/Jorados/capston/assets/100845256/d1ea6bc4-fe4a-4858-aa7f-11fff461ccef)     
 
+### 2. 회원 포인트 충전    
+매핑타입 : @PatchMapping     
+매핑주소 : /user/point      
+request: RequestParam 으로 name="chargePoint" 로 value(int타입) 보내면됨.     
+response : "포인트 충전이 완료되었습니다."        
+![image](https://github.com/Jorados/capston/assets/100845256/3f870429-b2b9-48a7-b242-b32412e095b3)      
+
 
 
 ## [ Post ]   
