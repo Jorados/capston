@@ -91,8 +91,15 @@ public class UserService {
     @Transactional
     public void PointUpdate(Long userId,int price){
         User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
-        int finalPrice = findUser.getPoint() - price;
-        findUser.priceDeduction(finalPrice);
+        int finalPoint = findUser.getPoint() - price;
+        findUser.priceUpdate(finalPoint);
+    }
+
+    @Transactional
+    public void ChargePoint(Long userId,int price){
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        int finalPoint = findUser.getPoint() + price;
+        findUser.priceUpdate(finalPoint);
     }
 
 
