@@ -73,5 +73,4 @@ public class CenterReservation {
                 .status(CenterReservationStatus.RESERVED)
                 .build();
     }
-
 }

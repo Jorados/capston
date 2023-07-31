@@ -14,10 +14,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,7 @@ import static jorados.capston.dto.CenterReservationDto.*;
 public class CenterReservationService {
     private final CenterReservationRepository centerReservationRepository;
     private final CenterRepository centerRepository;
+    private final UserService userService;
 
     // 예약하기
     @Transactional
@@ -44,9 +47,16 @@ public class CenterReservationService {
         }
 
         // 3. 예약 생성
-        CenterReservation reservation = CenterReservation.fromRequest(findCenter, user, request, getPrice(centerId, request.getReservingDate(), request).getPrice());
+        int reservationPrice = getPrice(centerId, request.getReservingDate(), request).getPrice();
+        CenterReservation reservation = CenterReservation.fromRequest(findCenter, user, request, reservationPrice);
+
+        // 3-2 에러처리 ( 포인트가 부족한지 아닌지 )
+        if(!pointComparison(user,reservation)){
+            throw new PointLack();
+        }
 
         // 4. 저장
+        userService.PointUpdate(user.getId(),reservationPrice);
         centerReservationRepository.save(reservation);
 
         // 5. 리턴 Response 작성
@@ -62,7 +72,6 @@ public class CenterReservationService {
                 .pricePerHalfHour(reservation.getPrice())
                 .headCount(reservation.getHeadCount())
                 .date(reservation.getReservingDate().toString())
-                //.date(LocalDate.now())
                 .build();
     }
 
@@ -178,20 +187,6 @@ public class CenterReservationService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // 해당시간 이미 예약됐는지 아닌지 체크 함수
     private boolean isAlreadyReservedTimes(Center center, LocalDate date, List<String> reservingTimes) {
         List<ReservingTime> reservedTimes = new ArrayList<>();
@@ -220,5 +215,13 @@ public class CenterReservationService {
         return PriceResponse.builder()
                 .price(stadiumPrice)
                 .build();
+    }
+
+    // 포인트 비교
+    public boolean pointComparison(User user,CenterReservation centerReservation){
+        if(user.getPoint() < centerReservation.getPrice()){
+            return false; // lack
+        }
+        return true;
     }
 }

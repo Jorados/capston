@@ -34,6 +34,7 @@ public class UserService {
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .role(UserEnum.CUSTOMER)
+                .point(100000)
                 .build();
         userRepository.save(saveUser);
         log.info("회원 가입 완료");
@@ -72,7 +73,6 @@ public class UserService {
             log.info("회원 닉네임 중복 발생");
             throw new DuplicateExceptionNickname();
         }
-
     }
 
 
@@ -86,6 +86,13 @@ public class UserService {
                 userEdit.getEmail() != null ? userEdit.getEmail() : findUser.getEmail(),
                 userEdit.getNickname() != null ? userEdit.getNickname() : findUser.getNickname()
         );
+    }
+
+    @Transactional
+    public void PointUpdate(Long userId,int price){
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        int finalPrice = findUser.getPoint() - price;
+        findUser.priceDeduction(finalPrice);
     }
 
 
