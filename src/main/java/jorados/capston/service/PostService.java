@@ -126,16 +126,19 @@ public class PostService {
     // 내가 쓴 댓글의 글 조회
     public Page<PostResponse> MyPostsByComment(User user, Pageable pageable){
         Long userId = user.getId();
+        Page<Object[]> myPosts = postRepository.findPostsByUserId(userId, pageable);
 
-        Page<Post> myPosts = postRepository.findPostsByUserId(userId, pageable);
+        List<PostResponse> postResponses = myPosts.getContent().stream().map(data -> {
+            Post post = (Post) data[0];
+            long commentCount = (long) data[1];
 
-        List<PostResponse> postResponses = myPosts.getContent().stream().map(post -> {
             PostResponse postResponse = PostResponse.builder()
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
                     .createdAt(post.getCreatedAt().toString())
                     .user(post.getUser())
+                    .commentSize(commentCount)
                     .build();
             return postResponse;
         }).collect(Collectors.toList());
