@@ -83,6 +83,7 @@ public class PostService {
                 .title(findPost.getTitle())
                 .content(findPost.getContent())
                 .user(findPost.getUser())
+                .commentSize(findPost.getComment().size())
                 .build();
 
         return postResponse;
@@ -172,5 +173,4 @@ public class PostService {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());
         return findPost.getUser().getId().equals(userId);
     }
-    //
 }
