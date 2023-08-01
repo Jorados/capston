@@ -93,15 +93,8 @@ public class CenterReservationService {
             throw new CouldNotCancelReservation();
         }
 
-        //reservation.cancelReservation();
-//        CenterReservationCancel reservationCancel = CenterReservationCancel.builder()
-//                .reservation(reservation)
-//                .price(reservation.getPrice())
-//                .build();
-
-        //centerReservationRepository.save(reservation);
+        userService.CancelPoint(user.getId(),reservation.getReservingTimes().size());
         centerReservationRepository.delete(reservation);
-        //centerReservationCancelRepository.save(reservationCancel);
     }
 
     // 예약정보 수정하기
@@ -117,11 +110,6 @@ public class CenterReservationService {
         if (!reservation.getUser().getId().equals(user.getId())) {
             throw new UnAuthorizedAccess();
         }
-
-//        사용완료할수없는 날짜 예외처리
-//        if (reservation.getReservingDate().isAfter(LocalDate.now().plusDays(1))) {
-//            throw new StadiumException(TooEarlyExecute);
-//        }
 
         reservation.executeReservation();
         centerReservationRepository.save(reservation);

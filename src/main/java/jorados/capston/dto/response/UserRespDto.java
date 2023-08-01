@@ -1,7 +1,6 @@
 package jorados.capston.dto.response;
 
 import jorados.capston.domain.User;
-import jorados.capston.util.CustomDateUtil;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -227,7 +227,7 @@ public class initCenter {
             em.persist(center14);
 
             Center center15 = Center.builder()
-                    .center_name("통염캠운동장1")
+                    .center_name("통영캠운동장1")
                     .lat(34.838744)
                     .lng(128.399730)
                     .imgUrl("https://mblogthumb-phinf.pstatic.net/MjAxODEwMjhfMTgy/MDAxNTQwNzIxNTQzNTYx.M1tQpUPK5dyoBIC9YPMAJB5wrYiAhqMDSj0T2UNouesg.2PKE05z16r8EdR1zxi5UM0E9PBkwXNXao7d8yrNGFXMg.JPEG.kmu2333/20180213_115841.jpg?type=w800")
@@ -241,7 +241,7 @@ public class initCenter {
             em.persist(center15);
 
             Center center16 = Center.builder()
-                    .center_name("통염캠운동장2")
+                    .center_name("통영캠운동장2")
                     .lat(34.836729)
                     .lng(128.400170)
                     .imgUrl("https://mblogthumb-phinf.pstatic.net/MjAxODEwMjhfMjcg/MDAxNTQwNzIxNTQ0MzIy.ZYxmLmI0w64kSA0Gv6W2TU6BJAtifq2fYCChaZbLHLcg.9xkpIYwAlPYAw0uysZGWFOjovtJ8jN5vMvKGKoowe9gg.JPEG.kmu2333/20180213_115910.jpg?type=w800")
@@ -255,7 +255,7 @@ public class initCenter {
             em.persist(center16);
 
             Center center17 = Center.builder()
-                    .center_name("통염캠체육관")
+                    .center_name("통영캠체육관")
                     .lat(34.83802)
                     .lng(128.399127)
                     .imgUrl("https://www.gnu.ac.kr/upload//campus/img_1efdf209-be0d-4ec6-8285-d732eaae2ad51673411867261.jpg")
@@ -269,7 +269,7 @@ public class initCenter {
             em.persist(center17);
 
             Center center18 = Center.builder()
-                    .center_name("통염캠테니스장")
+                    .center_name("통영캠테니스장")
                     .lat(34.838553)
                     .lng(128.398888)
                     .imgUrl("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F1722EA4D5155AA2B14")

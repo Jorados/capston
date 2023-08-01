@@ -102,6 +102,13 @@ public class UserService {
         findUser.priceUpdate(finalPoint);
     }
 
+    @Transactional
+    public void CancelPoint(Long userId,int reserveSize){
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        int finalPoint = findUser.getPoint() + (10000 * reserveSize);
+        findUser.priceUpdate(finalPoint);
+    }
+
 
     public void delete(Long userId){
         User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
