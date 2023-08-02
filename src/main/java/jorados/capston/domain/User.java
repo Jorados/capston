@@ -59,9 +59,9 @@ public class User implements Serializable {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
 //    private String provider;
 //    private String providerId;

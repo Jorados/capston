@@ -62,6 +62,7 @@ public class CommentService {
             CommentResponse commentResponse = CommentResponse.builder()
                     .id(comment.getId())
                     .content(comment.getContent())
+                    .createdAt(comment.getFormattedCreatedAt())
                     .user(comment.getUser())
                     .post(comment.getPost())
                     .build();
@@ -77,6 +78,7 @@ public class CommentService {
                     CommentResponse commentResponse = CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())
+                            .createdAt(comment.getFormattedCreatedAt())
                             .post(comment.getPost())
                             .user(comment.getUser())
                             .build();

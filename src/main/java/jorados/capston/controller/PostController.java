@@ -38,12 +38,14 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body("글이 생성 되었습니다.");
     }
 
-    // 모든 글 읽기
+    // 모든 글 읽기 - 오래된 순
     @GetMapping("/readAll")
-    public ResponseEntity<?> readAllPost(Pageable pageable){
-        Page<PostResponse> findAllPosts = postService.readAll(pageable);
+    public ResponseEntity<?> readAllPost(String keyword,Pageable pageable){
+        if (keyword == null) keyword = "latest";
+        Page<PostResponse> findAllPosts = postService.readAll(keyword, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(findAllPosts);
     }
+
 
     // 내가 쓴 글 조회
     @GetMapping("/myPosts")
@@ -60,7 +62,6 @@ public class PostController {
         Page<PostResponse> posts = postService.MyPostsByComment(findUser, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
-
 
     // 특정 글 읽기
     @GetMapping("/read/{postId}")

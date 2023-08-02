@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,33 +46,31 @@ public class PostService {
         postRepository.save(savePost);
     }
 
-    // 모든 글 읽기 -> 페이지 객체 존재 유무에 따라 다르게.
-    public Page<PostResponse> readAll(Pageable pageable){
-        //Page<Object[]> postWithCommentCount = postRepository.findAllPostsWithCommentCount(pageable);
-        Page<Object[]> postWithCommentCount;
+    // 모든 글 읽기 -> keyword에 따라 오름차순, 내림차순 정렬
+    public Page<PostResponse> readAll(String keyword,Pageable pageable){
+        Page<Post> posts;
 
-        if (pageable == null) {
-            postWithCommentCount = postRepository.findAllPostsWithCommentCount(Pageable.unpaged());
-        } else {
-            postWithCommentCount = postRepository.findAllPostsWithCommentCount(pageable);
+        if ("latest".equalsIgnoreCase(keyword)) {
+            posts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
         }
+        else if ("oldest".equalsIgnoreCase(keyword)){
+            posts = postRepository.findAllByOrderByCreatedAtAsc(pageable);
+        }
+        else posts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
 
-        List<PostResponse> postResponses = postWithCommentCount.getContent().stream().map(data -> {
-            Post post = (Post) data[0];
-            long commentCount = (long) data[1];
-
+        List<PostResponse> postResponses = posts.getContent().stream().map(post -> {
             PostResponse postResponse = PostResponse.builder()
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .createdAt(post.getCreatedAt().toString())
+                    .createdAt(post.getFormattedCreatedAt())
                     .user(post.getUser())
-                    .commentSize(commentCount)  // 댓글 개수 추가
+                    .commentSize(post.getComment().size())  // 댓글 개수 추가
                     .build();
             return postResponse;
         }).collect(Collectors.toList());
 
-        return new PageImpl<>(postResponses, pageable, postWithCommentCount.getTotalElements());
+        return new PageImpl<>(postResponses, pageable, posts.getTotalElements());
     }
 
     // 특정 글 읽기
@@ -83,6 +82,7 @@ public class PostService {
                 .title(findPost.getTitle())
                 .content(findPost.getContent())
                 .user(findPost.getUser())
+                .createdAt(findPost.getFormattedCreatedAt())
                 .commentSize(findPost.getComment().size())
                 .build();
 
@@ -115,7 +115,7 @@ public class PostService {
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .createdAt(post.getCreatedAt().toString())
+                    .createdAt(post.getFormattedCreatedAt())
                     .user(post.getUser())
                     .commentSize(post.getComment().size())
                     .build();
@@ -135,7 +135,7 @@ public class PostService {
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .createdAt(post.getCreatedAt().toString())
+                    .createdAt(post.getFormattedCreatedAt())
                     .user(post.getUser())
                     .commentSize(post.getComment().size())
                     .build();
@@ -160,7 +160,8 @@ public class PostService {
                     .id(post.getId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .createdAt(post.getCreatedAt().toString())
+                    .createdAt(post.getFormattedCreatedAt())
+                    .commentSize(post.getComment().size())
                     .user(post.getUser())
                     .build();
             return postResponse;

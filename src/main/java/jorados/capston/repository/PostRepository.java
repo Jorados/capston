@@ -24,6 +24,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT DISTINCT p FROM Post p LEFT JOIN Comment c ON p.id = c.post.id WHERE c.user.id = :userId GROUP BY p")
     Page<Post> findPostsByUserId(@Param("userId") Long userId, Pageable pageable);
 
+    // 최신순으로 글 조회
+    Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    // 오래된 순으로 글 조회
+    Page<Post> findAllByOrderByCreatedAtAsc(Pageable pageable);
+
+
+
+
+
+
     // 내가 쓴 글 조회
     Page<Post> findByUser(User user, Pageable pageable);
 
