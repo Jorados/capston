@@ -26,12 +26,14 @@ request: Requestboy에 글 생성정보 , 로그인상태
 response : "글이 생성 되었습니다."        
 ![image](https://github.com/Jorados/capston/assets/100845256/c8c90cd9-9142-46d0-a7bb-8f84fe4e4142)   
 
-### 2. 모든 글 조회      
+### 2. 모든 글 조회   
 매핑타입 : @GetMapping   
 매핑주소 : /post/readAll   
-request: Pageable 객체 ( size,page변수 / requestParam형태 ) -> 안보내면 디폴트 사이즈로 조회됨  
-response : "글이 생성 되었습니다."   
-![image](https://github.com/Jorados/capston/assets/100845256/d52c7d64-bfe4-4cab-8ed7-61e38d6aa7e4)       
+request: Pageable 객체 ( size,page변수 / requestParam형태 ) -> 안보내면 디폴트 사이즈로 조회됨 , keyword(String) -> "lastest" , "oldest"
+response : 글 조회    
+![image](https://github.com/Jorados/capston/assets/100845256/831adc8e-5816-4acd-8547-3228ea5298cf)    
+
+
 
 ### 3. 특정 글 조회  
 매핑타입: @GetMapping    
