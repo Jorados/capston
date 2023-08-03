@@ -20,7 +20,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Object[]> findAllPostsWithCommentCount(Pageable pageable);
 
     // 내가 쓴 댓글의 글 조회 , 그 글에 대한 COUNT(댓글)도 함께 조회
-    @Query("SELECT DISTINCT p FROM Post p LEFT JOIN Comment c ON p.id = c.post.id WHERE c.user.id = :userId GROUP BY p")
+    @Query("SELECT DISTINCT p FROM Post p LEFT JOIN Comment c ON p.id = c.post.id WHERE c.user.id = :userId ORDER BY p.id ASC")
     Page<Post> findPostsByUserId(@Param("userId") Long userId, Pageable pageable);
 
     // 최신순으로 글 조회
