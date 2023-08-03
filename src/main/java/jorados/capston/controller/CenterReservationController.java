@@ -41,14 +41,6 @@ public class CenterReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationInfo);
     }
 
-    // 센터 예약 수정
-    @PatchMapping("/{centerId}/reservation/{reservationId}")
-    public ResponseEntity<?> executeReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {
-        User findUser = principalDetails.getUser();
-        centerReservationService.executeReservation(findUser, centerId, reservationId);
-        return ResponseEntity.ok().build();
-    }
-
     // 센터 예약 취소
     @DeleteMapping("/{centerId}/reservation/{reservationId}")
     public ResponseEntity<?> deleteReservation(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long centerId, @PathVariable Long reservationId) {

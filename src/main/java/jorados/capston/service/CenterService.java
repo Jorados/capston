@@ -87,14 +87,6 @@ public class CenterService {
         return CenterInfoResponseDto.fromEntity(center);
     }
 
-
-    //센터정보 수정하기
-    @Transactional
-    public void center_update(Long id, CenterEdit CenterEdit){
-        // 아직 ㄴ
-    }
-
-
     //센터 삭제하기
     public void delete_center(Long id){
         Center findCenter = centerRepository.findById(id).orElseThrow(() -> new CenterNotFound());
@@ -130,11 +122,6 @@ public class CenterService {
         return findCenter;
     }
 
-    // 예약 정보 수정 -> 회의 필요
-    public void CenterReserveUpdate(User user,CenterEdit centerEdit){
-
-    }
-
     // 센터 삭제
     public void CenterReserveDelete(Long centerId){
         Center findCenter = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
@@ -143,7 +130,6 @@ public class CenterService {
 
     @Transactional
     public Page<Center> search(String searchValue, Pageable pageable){
-        //Page<Center> centersPage = centerRepository.findByCenter_nameContainingIgnoreCase(searchValue, pageable);
         Page<Center> centersPage = centerRepository.findAllSearch(searchValue, pageable);
         return centersPage;
     }

@@ -26,22 +26,9 @@ import java.util.List;
 
 @RestController
 @Slf4j
-//@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
-    private final UserRepository userRepository;
-    private final PrincipalDetailsService principalDetailsService;
-
-    private final AuthenticationManager authenticationManager;
-
-    //login,logout 기능은 일단 스프링시큐리티에서 제공
-
-    @PostMapping("/home")
-    public String home(){
-        return "<h1>홈<h1>";
-    }
 
     //가입
     @PostMapping("/join")
@@ -49,13 +36,6 @@ public class UserController {
         userService.join(user);
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", user.getUsername()), HttpStatus.CREATED);
     }
-
-    // 리프레시 토큰 - 예정
-//    @PostMapping("/refresh-token")
-//    public RefreshTokenResponse generateRefreshToken(@RequestBody final RefreshTokenRequest request) {
-//        RefreshTokenResponse refreshTokenResponse = tokenService.generateRefreshToken(request);
-//        return refreshTokenResponse;
-//    }
 
     //권한 테스트
     @GetMapping("/api/user/1")

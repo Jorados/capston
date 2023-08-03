@@ -24,5 +24,4 @@ public interface CenterRepository extends JpaRepository<Center,Long> {
     @Query("select c from Center c where c.center_name like %:searchValue% ")
     Page<Center> findAllSearch(String searchValue, Pageable pageable);
 
-     //Page<Center> findByCenter_nameContainingIgnoreCase(String name, Pageable pageable);
 }

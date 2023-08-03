@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    public Optional<Post> findByTitle(String title);
     Page<Post> findAll(Pageable pageable);
 
     // 댓글 수와 함께 리턴 ( [ Post , COUNT(댓글) ] )
@@ -29,11 +28,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 오래된 순으로 글 조회
     Page<Post> findAllByOrderByCreatedAtAsc(Pageable pageable);
-
-
-
-
-
 
     // 내가 쓴 글 조회
     Page<Post> findByUser(User user, Pageable pageable);

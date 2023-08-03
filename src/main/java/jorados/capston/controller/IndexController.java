@@ -14,18 +14,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
-
-//    @GetMapping("/")
-//    public String Test(){
-//        return "<h1>캡스톤 시작<h1>";
-//    }
-
-    @GetMapping("/user")
-    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        System.out.println("principalDetails:" + principalDetails.getUser());
-        return "user";
-    }
-
     @GetMapping("/loginForm")
     public String loginForm(@ModelAttribute User user, HttpSession session){
         if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {

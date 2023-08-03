@@ -48,15 +48,6 @@ public class CenterController {
         return ResponseEntity.ok().body(center);
     }
 
-    // 체육관 검색
-//    @GetMapping("/search")
-//    public ResponseEntity<Page<StadiumResponseDto>> searchStadium(
-//            @RequestParam String searchValue,
-//            Pageable pageable) {
-//        Page<StadiumResponseDto> stadiumDocuments = stadiumSearchService.search(searchValue, pageable);
-//        return ResponseEntity.ok().body(stadiumDocuments);
-//    }
-
     // 저장
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Center center,@AuthenticationPrincipal PrincipalDetails principalDetails){

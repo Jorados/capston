@@ -97,27 +97,6 @@ public class CenterReservationService {
         centerReservationRepository.delete(reservation);
     }
 
-    // 예약정보 수정하기
-    public void executeReservation(User user, Long centerId, Long reservationId) {
-        CenterReservation reservation = centerReservationRepository.findById(reservationId).orElseThrow(() -> new ReservationNotFound());
-
-        Center center = centerRepository.findById(centerId).orElseThrow(() -> new CenterNotFound());
-
-        if (!reservation.getCenter().getId().equals(centerId)) {
-            throw new CenterReservationNotMatch();
-        }
-
-        if (!reservation.getUser().getId().equals(user.getId())) {
-            throw new UnAuthorizedAccess();
-        }
-
-        reservation.executeReservation();
-        centerReservationRepository.save(reservation);
-    }
-
-
-
-
     // 내 예약목록
     @Transactional(readOnly = true)
     public Page<ReservationResponse> getAllReservationsByUser(User user, Pageable pageable) {
