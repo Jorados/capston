@@ -68,9 +68,10 @@ response: 글 ( 중복 x )
 ### 7. 게시글 검색   
 매핑타입: @GetMapping    
 매핑주소: /post/search    
-request: RequestParam형태로 searchType(title,content/String타입) , RequestParam형태로 keyword(String타입) , Pageable객체     
-response: 검색결과    
-![image](https://github.com/Jorados/capston/assets/100845256/3e99410e-4f01-41e4-88b5-0e5e165d0bb5)    
+request: RequestParam형태로 searchType(title,content/String타입), RequestParam형태로 sortType(lastest,oldest/String타입) , RequestParam형태로 keyword(String타입) , Pageable객체       
+response: 검색결과       
+![image](https://github.com/Jorados/capston/assets/100845256/a7373f73-7235-42cf-98a5-6d3fbb3496eb)    
+   
 
 ## [ Comment ]   
 
