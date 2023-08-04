@@ -14,10 +14,7 @@ import jorados.capston.repository.PostRepository;
 import jorados.capston.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -145,16 +142,25 @@ public class PostService {
         return new PageImpl<>(postResponses, pageable, myPosts.getTotalElements());
     }
 
-    // 검색(title,content) 글 조회
-    public Page<PostResponse> searchPostsByKeyword(String keyword, String searchType, Pageable pageable) {
+    // 검색(title,content) 글 조회 + sortType 에 따라 정렬
+    public Page<PostResponse> searchPostsByKeyword(String keyword, String searchType, String sortType, Pageable pageable) {
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt"); // 기본적으로 최신순 정렬
+        if ("oldest".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.ASC, "createdAt"); // 오래된순 정렬
+        }
+
+        Pageable realPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
         Page<Post> posts;
         if ("title".equals(searchType)) {
-            posts = postRepository.findByTitleContaining(keyword, pageable);
+            posts = postRepository.findByTitleContaining(keyword, realPageable);
         } else if ("content".equals(searchType)) {
-            posts = postRepository.findByContentContaining(keyword, pageable);
+            posts = postRepository.findByContentContaining(keyword, realPageable);
         } else {
-            posts = postRepository.findAll(pageable);
+            posts = postRepository.findAll(realPageable);
         }
+
         List<PostResponse> postResponses = posts.getContent().stream().map(post -> {
             PostResponse postResponse = PostResponse.builder()
                     .id(post.getId())
@@ -167,8 +173,11 @@ public class PostService {
             return postResponse;
         }).collect(Collectors.toList());
 
-        return new PageImpl<>(postResponses, pageable, posts.getTotalElements());
+        return new PageImpl<>(postResponses, realPageable, posts.getTotalElements());
     }
+
+
+
 
     public boolean isUserMatch(Long postId, Long userId) {
         Post findPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound());
