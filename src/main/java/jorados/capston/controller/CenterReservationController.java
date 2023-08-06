@@ -51,6 +51,12 @@ public class CenterReservationController {
         return new ResponseEntity<>("예약이 취소되었습니다.",null,HttpStatus.OK);
     }
 
+    // 센터 예약 정보 갱신 - 날짜단위
+    @PatchMapping("/reservations")
+    public ResponseEntity<?> getAllReservationsUpdate(){
+        centerReservationService.updateExpiredReservations();
+        return ResponseEntity.status(HttpStatus.OK).body("예약 상태 최신화 완료");
+    }
 
     /*****************************************  조회  ***********************************************************/
 

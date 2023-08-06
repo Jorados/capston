@@ -56,8 +56,8 @@ public class CenterReservation {
     // 인원수
     private int headCount;
 
-    public void executeReservation() {
-        this.status = CenterReservationStatus.EXECUTED;
+    public void expiredReservation() {
+        this.status = CenterReservationStatus.EXPIRED;
     }
 
     public static CenterReservation fromRequest(Center center, User user, CreateReservationRequest request, int price) {

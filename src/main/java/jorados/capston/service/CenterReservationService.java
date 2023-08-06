@@ -184,6 +184,18 @@ public class CenterReservationService {
                 .build();
     }
 
+    // 예약상태 업데이트 -> 만료
+    @Transactional
+    public void updateExpiredReservations() {
+        LocalDate currentDate = LocalDate.now();
+        List<CenterReservation> CenterReservations = centerReservationRepository.findByStatus(CenterReservationStatus.RESERVED);
+        for (CenterReservation centerReservation : CenterReservations) {
+            if (centerReservation.getReservingDate().isBefore(currentDate)) {
+                centerReservation.expiredReservation();
+            }
+        }
+    }
+
     // 포인트 비교
     public boolean pointComparison(User user,CenterReservation centerReservation){
         if(user.getPoint() < centerReservation.getPrice()){
