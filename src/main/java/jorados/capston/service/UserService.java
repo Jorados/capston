@@ -58,25 +58,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    private void validateDuplicateMember(User user) {
-        List<User> findAllUser = userRepository.findAllByUsername(user.getUsername());
-        List<User> findAllNickname = userRepository.findAllByNickname(user.getNickname());
-
-        //username 겹치는 경우
-        if (!findAllUser.isEmpty()) {
-            log.info("회원 아이디 중복 발생");
-            throw new DuplicateException();
-        }
-
-        //nickname 겹치는 경우
-        if(!findAllNickname.isEmpty()){
-            log.info("회원 닉네임 중복 발생");
-            throw new DuplicateExceptionNickname();
-        }
-    }
-
-
-    //수정
+    // 회원 정보 수정
     @Transactional
     public void update(Long userId, UserEdit userEdit){
         User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
@@ -86,6 +68,19 @@ public class UserService {
                 userEdit.getEmail() != null ? userEdit.getEmail() : findUser.getEmail(),
                 userEdit.getNickname() != null ? userEdit.getNickname() : findUser.getNickname()
         );
+    }
+
+    // 닉네임 수정
+    @Transactional
+    public void nickNameUpdate(Long userId,UserEdit userEdit){
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        List<User> findAllNickname = userRepository.findAllByNickname(userEdit.getNickname());
+
+        if(!findAllNickname.isEmpty()) {
+            log.info("회원 닉네임 중복 발생");
+            throw new DuplicateExceptionNickname();
+        }
+        findUser.nickNameUpdate(userEdit.getNickname());
     }
 
     @Transactional
@@ -115,4 +110,21 @@ public class UserService {
         userRepository.delete(findUser);
     }
 
+
+    private void validateDuplicateMember(User user) {
+        List<User> findAllUser = userRepository.findAllByUsername(user.getUsername());
+        List<User> findAllNickname = userRepository.findAllByNickname(user.getNickname());
+
+        //username 겹치는 경우
+        if (!findAllUser.isEmpty()) {
+            log.info("회원 아이디 중복 발생");
+            throw new DuplicateException();
+        }
+
+        //nickname 겹치는 경우
+        if(!findAllNickname.isEmpty()){
+            log.info("회원 닉네임 중복 발생");
+            throw new DuplicateExceptionNickname();
+        }
+    }
 }

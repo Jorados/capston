@@ -84,6 +84,9 @@ public class User implements Serializable {
         this.nickname = nickname;
     }
 
+    public void nickNameUpdate(String nickname){
+        this.nickname = nickname;
+    }
     public void priceUpdate(int point){
         this.point = point;
     }

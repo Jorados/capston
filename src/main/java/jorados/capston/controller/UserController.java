@@ -91,7 +91,7 @@ public class UserController {
     @PatchMapping("/user/update")
     public ResponseEntity<?> userUpdate(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody UserEdit userEdit){
         Long UserId = principalDetails.getUser().getId();
-        userService.update(UserId,userEdit);
+        userService.nickNameUpdate(UserId,userEdit);
         return ResponseEntity.status(HttpStatus.OK).body("수정완료 되었습니다.");
     }
 
