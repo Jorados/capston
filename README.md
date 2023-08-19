@@ -18,5 +18,5 @@
 * [회원,게시글,댓글 API 설계]( https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/%ED%9A%8C%EC%9B%90%2C%EA%B2%8C%EC%8B%9C%EA%B8%80%2C%EB%8C%93%EA%B8%80%20API.md)      
 * [AWS EC2 배포]( https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/AWS%20EC2%20%EB%B0%B0%ED%8F%AC.md)          
      
-### 공통 계정
+### 프로젝트 계정
 * [GNU_SPORTS](https://github.com/GNU-SPORTS)   
