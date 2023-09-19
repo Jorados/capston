@@ -19,7 +19,7 @@
 * [AWS EC2 배포]( https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/AWS%20EC2%20%EB%B0%B0%ED%8F%AC.md)          
      
 <!-- ### 프로젝트 계정
-* [GNU_SPORTS](https://github.com/GNU-SPORTS) -->
+* [GNU_SPORTS](https://github.com/GNU-SPORTS)  -->
 
 ### 프로젝트 정리
 * [프로젝트](https://github.com/Jorados/capston/blob/master/%EC%A0%95%EB%A6%AC/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8.md)
