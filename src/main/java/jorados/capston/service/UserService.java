@@ -103,13 +103,10 @@ public class UserService {
         int finalPoint = findUser.getPoint() + (10000 * reserveSize);
         findUser.priceUpdate(finalPoint);
     }
-
-
     public void delete(Long userId){
         User findUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
         userRepository.delete(findUser);
     }
-
 
     private void validateDuplicateMember(User user) {
         List<User> findAllUser = userRepository.findAllByUsername(user.getUsername());
